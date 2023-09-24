@@ -1,6 +1,3 @@
-[submodule "InkpotDemo/Plugins/InkpotDemo/Inkpot"]
-	path = InkpotDemo/Plugins/InkpotDemo/Inkpot
-	url = https://github.com/The-Chinese-Room/InkpotDemo.git
-[submodule "InkPotDemo/Plugins/Inkpot"]
-	path = InkPotDemo/Plugins/Inkpot
+[submodule "Inkpot"]
+	path = ./InkPotDemo/Plugins/Inkpot
 	url = https://github.com/The-Chinese-Room/Inkpot.git
