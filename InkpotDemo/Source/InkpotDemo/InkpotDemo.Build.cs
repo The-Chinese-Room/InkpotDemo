@@ -37,7 +37,6 @@ public class InkpotDemo : ModuleRules
 				"SlateCore",
 
                 "UMG",
-                "CommonUI",
             }
         );
 		
