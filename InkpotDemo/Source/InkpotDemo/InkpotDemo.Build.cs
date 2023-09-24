@@ -26,7 +26,7 @@ public class InkpotDemo : ModuleRules
 				"Engine", 
 				"InputCore",
 
-                //"Inkpot"
+                "Inkpot"
             }
 		);
 
