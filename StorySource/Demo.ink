@@ -9,13 +9,26 @@ VAR Cube1 = White
         Welcome to Inkpot & Ink 
         This is a demo of some of types of interaction between Ink script and world
         Walk towards to the big cube
+    - FlowsDemo.BabblingBlueBox == 0 and FlowsDemo.RamblingRedRoundel == 0 :
+        Now check out the blue box or the red roundel 
+    - FlowsDemo.BabblingBlueBox == 0:
+        Check out the blue box
+    - FlowsDemo.RamblingRedRoundel == 0 :
+        Check out the red roundel 
+    - FlowsDemo.BabblingBlueBox <= 2 and FlowsDemo.RamblingRedRoundel <= 0 :
+        The flow in for red and blue will pause for each when the flow is switched
+        Walk between the two to see this in action 
+    - ParameterPassingDemo == 0 :
+        Walk over to the parameter passing pad 
+        And see how easy it is to pass parameters to Ink
     - else :
-        Check out the, blue box or the red roundel 
+        Demo over :)
+        Though you can still wander into the areas and see the flows switch
     }
     -> DONE
 
 == BigCubeEncounter
-    What colour should the cubes be?
+    What colour should the cube be?
     +[White]
         ~Cube1 = White
     +[Red]
@@ -25,6 +38,7 @@ VAR Cube1 = White
     +[Green]
         ~Cube1 = Green
     - The cube is now {Cube1}
+    Now go check out some of the other areas 
     -> DONE
 
 == FlowsDemo( colour ) 
@@ -75,4 +89,15 @@ VAR Cube1 = White
     Red is a versatile color that can be used in many different ways. 
     Red is a popular choice for everything from home decor to fashion to art.
     -> DONE
+
+== ParameterPassingDemo( ABoolean, TheAnswer, PI, Message, Nephews ) 
+    Parameters passed are 
+    ABoolean : { ABoolean }
+    TheAnswer : { TheAnswer }
+    PI : { PI }
+    Message : { Message }
+    Nephews : { Nephews }
+    ->DONE
+    
+
 
