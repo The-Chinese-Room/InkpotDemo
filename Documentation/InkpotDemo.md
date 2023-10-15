@@ -7,6 +7,7 @@ https://github.com/inkle/inky
 ## Importing ink files 
 To import, drag the ink source file into a content browser window within the Unreal Editor. 
 The will create the InkpotStoryAsset, that contains the compiled JSON source.
+
 ![DragFile](images/DragFile.png)
 
 ## Setting up auto reimport
@@ -16,27 +17,31 @@ Look Under general, loading and saving, auto reimpor.
 Add a new 'Directories to Monitor' entry by clicking the plus.
 
 Include the source folder, map directory to the corresponding folder in the unreal content browser.
+
 ![AutoReimportOptions](images/AutoReimport.png)
 
 Once this is setup, the content directory will automatically update when you update, create or delete any ink files in the source folder.
 
 ## Starting a story 
 In blueprints, get the Inkpot subsystem and call BeginStory, passing in the InpotStoryAsset. 
+
 ![Alt text](images/BeginStory.png)
 
 This returns the runtime InkpotStory that executes the script.  
 In this demo, the stories are started by the Level Blueprint.
 
 ## Getting story updates
-Once the story has been satrted using the BeginStory function of Inkpot, it will return an InkpotStory.
+Once the story has been started using the BeginStory function of Inkpot, it will return an InkpotStory.
 The InkpotStory is the runtime for the Ink script execution.
 In this demo, the UI is hooked up to the InkpotStory created by the level blueprint.
 This is done in the game mode blueprint, BP_InkpotDemoGameMode.
+
 ![BindStoryBegin](images/BindBegin.png)
 
-
 The UI, where all of the story updates happen, is defined by the widget WBP_Display.
+
 The event graph looks like this. 
+
 ![Alt text](images/UIEventGraph.png)
 
 Here we see the events that drive Ink execution.
@@ -49,7 +54,7 @@ This event happens in response to Continue being called on the story.
 A choice has been made. In this demo the user has clicked on a choice shown ( see OnItemClicked ), and the ChooseChoice function has been called. 
 Here, we continue the story, which will result in OnContinue being called thereby updating the UI. 
 
-### Switch Flow
+### OnSwitchFlow
 Flows allow several 'threads' of story to run at the same time. This is used in the demo level to give contextual story snippets fpr whereever the player has walked to.
 This event is called in response to calling the function SwitchFlow on the InkpotStory object.
 
@@ -106,24 +111,25 @@ Alternatively, values can be set directly through the InkpotStory object using o
 	void SetEmpty( const FString& Variable );
 
 ### Change notification
-Variable change notification can be achieved either through binding to the set on variable change delegate of the story.
+#### Story Change Delegate
+Variable change notification can be achieved through binding to the set on variable change delegate of the story.
 ![Alt text](images/SetOnVaraibleChange.png)
 
-Or use an InkPotWatch component on the Actor to receive the notifications.
+#### InkPotWatch component
+The InkPotWatch component allows Actors to receive the notification of variable change.
 Open up the Actor blueprint and Click Add component, choose InkpotWatch.
+
 ![Alt text](images/AddComponent.png)
 
-Rename
+Rename it to represent its purpose
+
 ![Alt text](images/RenameComponent.png)
 
 Then hook up the event, 
+
 ![Alt text](images/ChangeNotify.png)
 
-And when the blueprint is placed in the world, set the 'Variable Watch' field to the name of the ink variable to be watched.
+And when this blueprint is placed in the world, set the 'Variable Watch' field to the name of the ink variable to be watched.
+
 ![Alt text](images/InstanceDetails.png)
-
-
-
-
-
 
