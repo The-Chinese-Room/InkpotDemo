@@ -35,19 +35,93 @@ This is done in the game mode blueprint, BP_InkpotDemoGameMode.
 ![BindStoryBegin](images/BindBegin.png)
 
 
-The UI, where all of the story updates happen, is in WBP_Display
+The UI, where all of the story updates happen, is defined by the widget WBP_Display.
+The event graph looks like this. 
+![Alt text](images/UIEventGraph.png)
 
+Here we see the events that drive Ink execution.
 
-### Continue 
-### Choices 
-### Selection 
+### OnContinue 
+This is called once the story has continued. Here we update the UI to show the current stories text, and update the cnoices if there are any. 
+This event happens in response to Continue being called on the story.
+
+### OnMakeChoice
+A choice has been made. In this demo the user has clicked on a choice shown ( see OnItemClicked ), and the ChooseChoice function has been called. 
+Here, we continue the story, which will result in OnContinue being called thereby updating the UI. 
+
+### Switch Flow
+Flows allow several 'threads' of story to run at the same time. This is used in the demo level to give contextual story snippets fpr whereever the player has walked to.
+This event is called in response to calling the function SwitchFlow on the InkpotStory object.
 
 ## Variables
-### Setting a variable
-### Getting a variable
-### Change notification
+Ink supports type free variables, Blueprints require typed variables. 
+To allow conversion between the two there is a blueprint function library to convert from one to the other.
 
-## Flow control
+	/* Create an Ink Value from a boolean */
+	FInkpotValue MakeBoolInkpotValue(bool bValue);
+
+	/* Cast Ink value to a boolean */
+	bool InkpotValueAsBool(FInkpotValue Value);
+
+	/* Create an Ink Value from an integer */
+	FInkpotValue MakeIntInkpotValue(int32 Value);
+
+	/* Cast Ink value to an integer*/
+	int32 InkpotValueAsInt(FInkpotValue Value);
+
+	/* Create an Ink Value from a float */
+	FInkpotValue MakeFloatInkpotValue(float Value);
+
+	/* Cast Ink value to a float*/
+	float InkpotValueAsFloat(FInkpotValue Value);
+
+	/* Create an Ink Value from a string */
+	FInkpotValue MakeStringInkpotValue(const FString &Value);
+
+	/* Cast Ink value to a string*/
+	FString InkpotValueAsString(FInkpotValue Value);
+
+	/* Create an Ink List from an array of Strings */
+	FInkpotValue MakeInkpotList(const TArray<FString> &Value);
+
+	/* Get an array of strings from an Ink List */
+	TArray<FString> InkpotValueAsList(FInkpotValue Value);    
+
+![Alt text](images/MakeInkpotValue.png)
+
+Alternatively, values can be set directly through the InkpotStory object using one of the Set or Get functions.
+
+	void SetBool(const FString &Variable, bool bValue);
+	bool GetBool(const FString &Variable);
+
+	void SetInt(const FString &Variable, int32 Value);
+	int32 GetInt(const FString &Variable);
+
+	void SetFloat( const FString& Variable, float Value );
+	float GetFloat( const FString& Variable );
+
+	void SetString( const FString& Variable, const FString& Value );
+	FString GetString( const FString& Variable );
+
+	void SetEmpty( const FString& Variable );
+
+### Change notification
+Variable change notification can be achieved either through binding to the set on variable change delegate of the story.
+![Alt text](images/SetOnVaraibleChange.png)
+
+Or use an InkPotWatch component on the Actor to receive the notifications.
+Open up the Actor blueprint and Click Add component, choose InkpotWatch.
+![Alt text](images/AddComponent.png)
+
+Rename
+![Alt text](images/RenameComponent.png)
+
+Then hook up the event, 
+![Alt text](images/ChangeNotify.png)
+
+And when the blueprint is placed in the world, set the 'Variable Watch' field to the name of the ink variable to be watched.
+![Alt text](images/InstanceDetails.png)
+
 
 
 
