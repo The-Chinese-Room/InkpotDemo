@@ -1,7 +1,7 @@
 # InkpotDemo
 Small demo project in Unreal showing how to use Inkpot
 
-Documentation/DemoIntro.md
+For an overview of the project structure, look in Documentation/DemoIntro.md
 
-Documentation/InkpotDemo.md
+For more details on how things are hooked up look in Documentation/InkpotDemo.md
 
