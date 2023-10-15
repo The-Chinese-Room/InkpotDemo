@@ -7,12 +7,12 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
 == Main
     {  
     - not visited : 
-        This is a demo of some of types of interaction between Ink script and the game world.
-        The Ink flow is switched by the triggers that have been setup in the level blueprint.  
+        This is a demo of some of the types of interaction between Ink script and the game world.
+        The Ink flow is controlled by triggers that have been setup in the level blueprint.  
         Use W,A,S,D to walk, and the left and right arrow keys to turn.
-        Walk towards to the colourless cube.
+        Now, walk towards to the colourless cube.
     - not (visited has RedRoundel or visited has BlueBox ):
-        Visit the blue box or the red roundel.
+        Visit the blue box or the red roundel areas.
     - not ( visited has BlueBox ):
         -> FlowDescription ->
         Check out the blue box.
@@ -20,21 +20,19 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
         -> FlowDescription ->
         Now, go visit out the red roundel.
     - visited has (RedRoundel, BlueBox) and not ( visited has Parms ) and Main >= 7:
-        Now, walk over to the parameter passing pad, 
+        Ok, enough of facts about red and blue!
+        Walk over to the parameter passing pad, 
         and see how easy it is to pass parameters to Ink.
+    - Main < 7:
+        { shuffle :
+        - See the blue box again.
+        - Regard the red roundel once more.
+        }
     - else :
-        {
-        - Main < 7:
-            { shuffle :
-            - See the blue box again.
-            - Regard the red roundel again.
-            }
-        - else :
-            { shuffle :
-            - Change the colour of the cube, again.
-            - Go back to the blue box.
-            - Return to the red roundel.
-            }
+        { shuffle :
+        - Change the colour of the cube, again.
+        - Go back to the blue box.
+        - Return to the red roundel.
         }
     }
     -> DONE
@@ -51,9 +49,10 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
 == BigCubeEncounter
     {
     - not (visited ? Cube) :
-        This cube demos how you can set up an Ink variable watch, 
-        this cube has an Inkpot watch component that notifies when a variable changes,
-        see props\BP_InkyCube for how this is setup.
+        This cube demos how you can react to an Ink variable changing its value. 
+        For this cube, we are waiting for the Ink variable 'Cube1' to change.
+        Check the details panel for the cube to see this, under Inkpot Watch.
+        Open the blueprint, props\BP_InkyCube, to see how this is setup using an Inkpot watch component.
         Now, this cube has no colour. 
         What colour should the cube be?
     - else :
@@ -67,7 +66,7 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
     +[Green] Green, green, green, it's not easy bein’ green!
         ~Cube1 = Green
     - The cube is now {Cube1}
-    Now go check out some of the other areas
+    Now go check out some of the other areas.
     When you come back here you can change the cube colour again. 
     -> DONE
 
