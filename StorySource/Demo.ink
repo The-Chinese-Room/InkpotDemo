@@ -31,9 +31,9 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
             }
         - else :
             { shuffle :
-            - Change the colour of the cube.
-            - Go to the blue box.
-            - Visit the red roundel.
+            - Change the colour of the cube, again.
+            - Go back to the blue box.
+            - Return to the red roundel.
             }
         }
     }
