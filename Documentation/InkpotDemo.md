@@ -53,7 +53,7 @@ A choice has been made. In this demo the user has clicked on a choice shown ( se
 Here, we continue the story, which will result in OnContinue being called thereby updating the UI. <br>
 
 ### OnSwitchFlow
-Flows allow several 'threads' of story to run at the same time. This is used in the demo level to give contextual story snippets fpr whereever the player has walked to.<br>
+Flows allow several 'threads' of story to run at the same time. This is used in the demo level to give contextual story snippets fopr wherever the player has walked to.<br>
 This event is called in response to calling the function SwitchFlow on the InkpotStory object.<br>
 
 ## Variables
