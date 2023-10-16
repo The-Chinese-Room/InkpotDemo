@@ -1,8 +1,8 @@
-#Inkpot Demo 
+# Inkpot Demo 
 
 For more info see InpotDemo/Documentation
 
-##Folder structure 
+## Folder structure 
 
 	Content
 		InkpotDemo
