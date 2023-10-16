@@ -1,7 +1,7 @@
 # Inkpot Demo
-Small demo project in Unreal showing how to use the Inkpot plugin for Unreal Engine.<br>
+Small demo project in Unreal showing how to use the Inkpot plugin for Unreal Engine created by [The Chinese Room](https://www.thechineseroom.co.uk/).<br><br>
 Inkpot is a wrapper for the scripting language **Ink** developed by [Inkle Studios](https://www.inklestudios.com/ink/)<br>
-See the [Inkpot github](https://github.com/The-Chinese-Room/Inkpot) for more info on the Inkpot plugin itself.<br>
+See the [Inkpot github](https://github.com/The-Chinese-Room/Inkpot) for more info on the Inkpot plugin itself.<br><br>
 This project works with Unreal Engine version 5.3 or later.<br>
 
 ## Folder structure 
