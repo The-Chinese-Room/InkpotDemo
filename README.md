@@ -38,7 +38,7 @@ https://github.com/inkle/inky
 To import, drag the ink source file into a content browser window within the Unreal Editor.<br>
 The will create the InkpotStoryAsset, that contains the compiled JSON from source.<br>
 
-![DragFile](documentation/DragFile.png)
+![DragFile](Documentation/DragFile.png)
 
 ## Setting up auto reimport
 Open editor, preferences.<br> 
@@ -47,14 +47,14 @@ Add a new 'Directories to Monitor' entry by clicking the plus.<br>
 
 Include the source folder, map directory to the corresponding folder in the unreal content browser.
 
-![AutoReimportOptions](documentation/AutoReimport.png)
+![AutoReimportOptions](Documentation/AutoReimport.png)
 
 Once this is setup, the content directory will automatically update when you update, create or delete any ink files in the source folder.
 
 ## Starting a story 
 In blueprints, get the Inkpot subsystem and call BeginStory, passing in the InpotStoryAsset. 
 
-![BeginStory](documentation/BeginStory.png)
+![BeginStory](Documentation/BeginStory.png)
 
 This returns the runtime InkpotStory that executes the script.  
 In this demo, the stories are started by the Level Blueprint.
@@ -65,12 +65,12 @@ The InkpotStory is the runtime for the Ink script execution.<br>
 In this demo, the UI is hooked up to the InkpotStory created by the level blueprint.<br>
 This is done in the game mode blueprint, BP_InkpotDemoGameMode.<br>
 
-![BindStoryBegin](documentation/BindBegin.png)
+![BindStoryBegin](Documentation/BindBegin.png)
 
 The UI, where all of the story updates happen, is defined by the widget WBP_Display.<br>
 The event graph looks like this. <br>
 
-![UIEventGraph](documentation/UIEventGraph.png)
+![UIEventGraph](Documentation/UIEventGraph.png)
 
 Here we see the events that drive Ink execution.<br>
 
@@ -120,7 +120,7 @@ To allow conversion between the two there is a blueprint function library to con
 	/* Get an array of strings from an Ink List */
 	TArray<FString> InkpotValueAsList(FInkpotValue Value);    
 
-![MakeInkpotValue](documentation/MakeInkpotValue.png)
+![MakeInkpotValue](Documentation/MakeInkpotValue.png)
 
 Alternatively, values can be set directly through the InkpotStory object using one of the Set or Get functions.<br>
 
@@ -138,7 +138,7 @@ Alternatively, values can be set directly through the InkpotStory object using o
 
 	void SetEmpty( const FString& Variable );
 
-![StorySetNGet](documentation/StorySetNGet.png)
+![StorySetNGet](Documentation/StorySetNGet.png)
 
 
 ### Change notification
@@ -146,25 +146,25 @@ There are a couple of ways of getting change notification from Inkpot, *Story Ch
 
 #### Story Change Delegate
 Variable change notification can be achieved through binding to the set on variable change delegate of the story.
-![OnVariableChange](documentation/SetOnVaraibleChange.png)
+![OnVariableChange](Documentation/SetOnVaraibleChange.png)
 
 #### InkPotWatch component
 The InkPotWatch component allows Actors to receive the notification of variable change.
 Open up the Actor blueprint and Click Add component, choose InkpotWatch.
 
-![AddComponent](documentation/AddComponent.png)
+![AddComponent](Documentation/AddComponent.png)
 
 Rename it to represent its purpose
 
-![RenameComponent](documentation/RenameComponent.png)
+![RenameComponent](Documentation/RenameComponent.png)
 
 Then hook up the event, 
 
-![ChangeNotify](documentation/ChangeNotify.png)
+![ChangeNotify](Documentation/ChangeNotify.png)
 
 And when this blueprint is placed in the world, set the 'Variable Watch' field to the name of the ink variable to be watched.
 
-![InstanceDetails](documentation/InstanceDetails.png)
+![InstanceDetails](Documentation/InstanceDetails.png)
 
 ---
 
@@ -173,12 +173,12 @@ We have 168 active tests in Inkpot that test the implementaion of the InkPlusPlu
 These can all be run through the *Session Frontend* within the Unreal editor.<br>
 To run the tests, first open the *Session Frontend* from Tools, Session Frontend.<br>
 
-![OpenSessionFrontEnd](documentation/OpenSessionFrontEnd.png)
+![OpenSessionFrontEnd](Documentation/OpenSessionFrontEnd.png)
 
 Select the automation panel, and click the check box next to **Inkpot**.<br>
 Then hit the play button to start the tests.<br>
 
-![RunTests](documentation/RunTests.png)
+![RunTests](Documentation/RunTests.png)
 
 You will note that a couple of the tests fail, which are concerned with JSON serialisation. This is a feature that we did not need in our usage case for Ink. 
 There are also some tests that have not yet been implemented, see .\\Inkpot\\TestInkSource\\Incomplete.
