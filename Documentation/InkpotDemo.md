@@ -45,7 +45,7 @@ The event graph looks like this. <br>
 Here we see the events that drive Ink execution.<br>
 
 ### OnContinue 
-This is called once the story has continued. Here we update the UI to show the current story's text, and update the cnoices if there are any. <br>
+This is called once the story has continued. Here we update the UI to show the current story's text, and update the choices if there are any. <br>
 This event happens in response to Continue being called on the story.<br>
 
 ### OnMakeChoice
