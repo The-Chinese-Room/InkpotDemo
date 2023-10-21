@@ -13,7 +13,7 @@ This project works with Unreal Engine version 5.3 or later.<br>
 					- game mode Blueprint, creates UI, handles Inkpot OnStoryBegin.
 			Maps
 				Demo 		
-					- A demo of how Ink scripts can interact with level blueprints and actors. 
+					- A demo of Ink scripts interacting with level blueprints and actors. 
 				HelloInk	
 					- The most minimal demo using the default ink story.
 				Intro 		
