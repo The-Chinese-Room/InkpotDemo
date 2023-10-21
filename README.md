@@ -120,6 +120,8 @@ To allow conversion between the two there is a blueprint function library to con
 	/* Get an array of strings from an Ink List */
 	TArray<FString> InkpotValueAsList(FInkpotValue Value);    
 
+![MakeInkpotValue](Documentation/InpotValueAs.png)
+
 ![MakeInkpotValue](Documentation/MakeInkpotValue.png)
 
 Alternatively, values can be set directly through the InkpotStory object using one of the Set or Get functions.<br>
@@ -165,6 +167,13 @@ Then hook up the event,
 And when this blueprint is placed in the world, set the 'Variable Watch' field to the name of the ink variable to be watched.
 
 ![InstanceDetails](Documentation/InstanceDetails.png)
+
+
+## Debug Log
+Inkpot has it's own debug category, which you can filter the OutputLog by.
+
+![DebugLog](Documentation/DebugLog.png)
+
 
 ---
 
