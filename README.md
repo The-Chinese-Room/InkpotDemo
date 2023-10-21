@@ -13,7 +13,7 @@ This project works with Unreal Engine version 5.3 or later.<br>
 					- game mode Blueprint, creates UI, handles Inkpot OnStoryBegin.
 			Maps
 				Demo 		
-					- A demo of how Ink scripts can interact with level blueprints and actors. 
+					- A demo of Ink scripts interacting with level blueprints and actors. 
 				HelloInk	
 					- The most minimal demo using the default ink story.
 				Intro 		
@@ -25,9 +25,9 @@ This project works with Unreal Engine version 5.3 or later.<br>
 				- all the Inkpot story assets.
 			UI
 				WBP_Display
-					- the main display widget, this is where most of the Ink handling logic lies.
+					- the main display widget, this is where most of the Ink logic lies.
 				WBP_Choice
-					- widget for choices that can be made in an ink story, used by WBP_Display.
+					- widget for choices that can be made in a story, used by WBP_Display.
 
 
 ## Editing Ink source
