@@ -52,8 +52,8 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
         This cube demos how you can react to an Ink variable changing its value. 
         For this cube, we are waiting for the Ink variable 'Cube1' to change.
         Check the details panel for the cube to see this, under Inkpot Watch.
-        Open the blueprint, props\BP_InkyCube, to see how this is setup using an Inkpot watch component.
-        Now, this cube has no colour. 
+        Open the blueprint, props\\BP_InkyCube, to see how this is setup using an Inkpot watch component.
+        Now, this cube has no colour! 
         What colour should the cube be?
     - else :
         This cube is {Cube1}, what new colour should it be?
