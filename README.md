@@ -25,7 +25,7 @@ This project works with Unreal Engine version 5.3 or later.<br>
 				- all the Inkpot story assets.
 			UI
 				WBP_Display
-					- the main display widget, this is where most of the Ink handling logic lies.
+					- the main display widget, this is where most of the Ink logic lies.
 				WBP_Choice
 					- widget for choices that can be made in an ink story, used by WBP_Display.
 
