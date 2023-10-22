@@ -1,5 +1,4 @@
-LIST Colour = White, Red, Blue, Green
-VAR Cube1 = White
+LIST CubeColour = (White), Red, Blue, Green
 LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
 
 -> Main
@@ -50,22 +49,22 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
     {
     - not (visited ? Cube) :
         This cube demos how you can react to an Ink variable changing its value. 
-        For this cube, we are waiting for the Ink variable 'Cube1' to change.
+        For this cube, we are waiting for the Ink variable 'CubeColour' to change.
         Check the details panel for the cube to see this, under Inkpot Watch.
         Open the blueprint, props\\BP_InkyCube, to see how this is setup using an Inkpot watch component.
         Now, this cube has no colour! 
         What colour should the cube be?
     - else :
-        This cube is {Cube1}, what new colour should it be?
+        This cube is {CubeColour}, what new colour should it be?
     }
     ~visited += Cube
     +[Red] You chose Red.
-        ~Cube1 = Red
+        ~CubeColour = Red
     +[Blue] Blue is the choice you made. 
-        ~Cube1 =Blue
+        ~CubeColour =Blue
     +[Green] Green, green, green, it's not easy bein’ green!
-        ~Cube1 = Green
-    - The cube is now {Cube1}
+        ~CubeColour = Green
+    - The cube is now {CubeColour}
     Now go check out some of the other areas.
     When you come back here you can change the cube colour again. 
     -> DONE
