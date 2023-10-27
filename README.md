@@ -40,6 +40,12 @@ The will create the InkpotStoryAsset, that contains the compiled JSON from sourc
 
 ![DragFile](Documentation/DragFile.png)
 
+### Note: .net 3.1 requirement
+If your Ink file fails to import, then you most likely do not have **.net 3.1** installed.<br>
+Inkpot compiles your source when you import using the InkleCate compiler, & InkleCate requires the **.net 3.1** framework.<br>
+To fix install the **.net 3.1** framework <br>
+https://dotnet.microsoft.com/en-us/download/dotnet/3.1/runtime?cid=getdotnetcore
+
 ## Setting up auto reimport
 Open editor, preferences.<br> 
 Look Under general, loading and saving, auto reimport.<br>
