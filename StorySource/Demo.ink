@@ -9,7 +9,7 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
         This is a demo of some of the types of interaction between Ink script and the game world.
         The Ink flow is controlled by triggers that have been setup in the level blueprint.  
         Use W,A,S,D to walk, and the left and right arrow keys to turn.
-        Now, walk towards to the colourless cube.
+        Now, walk towards to the colourless cubes.
     - not (visited has RedRoundel or visited has BlueBox ):
         Visit the blue box or the red roundel areas.
     - not ( visited has BlueBox ):
@@ -29,7 +29,7 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
         }
     - else :
         { shuffle :
-        - Change the colour of the cube, again.
+        - Change the colour of the cubes, again.
         - Go back to the blue box.
         - Return to the red roundel.
         }
@@ -48,14 +48,14 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
 == BigCubeEncounter
     {
     - not (visited ? Cube) :
-        This cube demos how you can react to an Ink variable changing its value. 
-        For this cube, we are waiting for the Ink variable 'CubeColour' to change.
+        These cubes demo how you can react to an Ink variable changing its value. 
+        For these cubes, we are waiting for the Ink variable 'CubeColour' to change.
         Check the details panel for the cube to see this, under Inkpot Watch.
         Open the blueprint, props\\BP_InkyCube, to see how this is setup using an Inkpot watch component.
-        Now, this cube has no colour! 
-        What colour should the cube be?
+        Now, these cubes have no colour! 
+        What colour should they be?
     - else :
-        This cube is {CubeColour}, what new colour should it be?
+        The cubes are {CubeColour}, what new colour should they be?
     }
     ~visited += Cube
     +[Red] You chose Red.
@@ -64,7 +64,7 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
         ~CubeColour =Blue
     +[Green] Green, green, green, it's not easy bein’ green!
         ~CubeColour = Green
-    - The cube is now {CubeColour}
+    - The cubes are now {CubeColour}
     Now go check out some of the other areas.
     When you come back here you can change the cube colour again. 
     -> DONE
