@@ -174,7 +174,49 @@ And when this blueprint is placed in the world, set the 'Variable Watch' field t
 
 ![InstanceDetails](Documentation/InstanceDetails.png)
 
+## External Functions
+As of v0.2.20 of Inkpot, you can now bind external C++ and Blueprint functions to Ink, so that they can be called directly from the Ink script.<br>
 
+### Hooking up to Blueprints
+Here are the steps you need to follow to bind a _Blueprint_ function to Ink.<br>
+First, in your ink script define the external function as you normally would. 
+
+	EXTERNAL MyExternalBPFunction( ABoolean, TheAnswer, PI, Message, AreasVisited )
+
+To get the story object you want to bind this to and add _Bind External Function_, like so<br>
+
+![BindeExternalNode](Documentation/BindeExternalNode.png)
+
+_Function Name_ is what we called the function when we declared it in the ink script, this should match.<br>
+
+_Function_ should link to a Blueprint function matching the general signature of _FInkpotValue MyFunction( const TArray\<FInkpotValue\> &Values )_<br>
+
+The easiest way of doing this is as follows:<br>
+
+1. Drag off the Function pin, then select _Create Event_ under _Event Dispatchers_<br>
+
+![BindExternalEventDispatcher](Documentation/BindExternalEventDispatcher.png)
+
+2. Then from the new _Create Event_ node, select _Create a matching function_.<br>
+
+![BindExternalCreateMatching](Documentation/BindExternalCreateMatching.png)
+
+3. All going well, you will be presented with your shiny new Blueprint function.<br>
+Which here simply prints the first parameter (a string).<br>
+
+![BindExternalFunctionBody](Documentation/BindExternalFunctionBody.png)
+
+### Parameter Passing
+Parameters from Ink are passed into the external function as an array of Inkpot values.<br>
+The paramters are ordered in the array with the left most function argument being the first at index 0 of the array, the second argument will be at index 1 and so on.<br>
+
+As values in Ink are not typed, you'll need to use helper functions to convert from Inkpot Values to the typed values that Blueprints use.<br>
+To make things easier, here are some helper functions to convert the elements of the Inkpot Value arrays.<br>
+
+![BindExternalHelpers](Documentation/BindExternalHelpers.png)
+
+See the demo for a more complete example.<br>
+ 
 ## Debug Log
 Inkpot has it's own debug category, which you can filter the OutputLog by.
 
@@ -184,7 +226,7 @@ Inkpot has it's own debug category, which you can filter the OutputLog by.
 ---
 
 # Testing InkPlusPlus
-We have 168 active tests in Inkpot that test the implementaion of the InkPlusPlus module.<br>
+We have 170 active tests in Inkpot that test the implementaion of the InkPlusPlus module.<br>
 These can all be run through the *Session Frontend* within the Unreal editor.<br>
 To run the tests, first open the *Session Frontend* from Tools, Session Frontend.<br>
 
