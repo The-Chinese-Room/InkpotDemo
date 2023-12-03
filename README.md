@@ -175,15 +175,16 @@ And when this blueprint is placed in the world, set the 'Variable Watch' field t
 ![InstanceDetails](Documentation/InstanceDetails.png)
 
 ## External Functions
-As of v0.2.20 of Inkpot, you can now bind external C++ and Blueprint functions to Ink, so that they can be called directly from the Ink script.<br>
+As of version 0.2.20 of Inkpot, you can bind external C++ and Blueprint functions to Ink, so that they can be called directly from the Ink script.<br>
 
 ### Hooking up to Blueprints
 Here are the steps you need to follow to bind a _Blueprint_ function to Ink.<br>
-First, in your ink script define the external function as you normally would. 
+First, in your ink script define the external function as you normally would.<br>
+( don't forget to reimport your Ink files )<br> 
 
 	EXTERNAL MyExternalBPFunction( ABoolean, TheAnswer, PI, Message, AreasVisited )
 
-To get the story object you want to bind this to and add _Bind External Function_, like so<br>
+Use the _Bind External Function_ node, to declare the binding to your story, like so<br>
 
 ![BindeExternalNode](Documentation/BindeExternalNode.png)
 
@@ -208,7 +209,7 @@ Which here simply prints the first parameter (a string).<br>
 
 ### Parameter Passing
 Parameters from Ink are passed into the external function as an array of Inkpot values.<br>
-The paramters are ordered in the array with the left most function argument being the first at index 0 of the array, the second argument will be at index 1 and so on.<br>
+The parameters are ordered in the array with the left most function argument being the first at index 0 of the array, the second argument will be at index 1 and so on.<br>
 
 As values in Ink are not typed, you'll need to use helper functions to convert from Inkpot Values to the typed values that Blueprints use.<br>
 To make things easier, here are some helper functions to convert the elements of the Inkpot Value arrays.<br>
