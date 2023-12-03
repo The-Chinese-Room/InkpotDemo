@@ -1,5 +1,6 @@
+EXTERNAL MyExternalBPFunction( ABoolean, TheAnswer, PI, Message, AreasVisited )
 LIST CubeColour = (White), Red, Blue, Green
-LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
+LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained, ExternalFuncs
 
 -> Main
 
@@ -132,5 +133,11 @@ LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained
     ~visited += Parms
     ->DONE
     
+== ExternalFunctionDemo
+    ~visited += ExternalFuncs
+    This section demos how Ink can call into a blueprint function. 
+    ~temp ReturnValue = MyExternalBPFunction( true, 42, 3.142, "Hello from Ink", visited )
+    and this, '{ReturnValue}', is what it returned. 
+    ->DONE
 
 
