@@ -220,14 +220,38 @@ See the demo for a more complete example.<br>
  
 ## Debug Log
 Inkpot has it's own debug category, which you can filter the OutputLog by.
+This can be turned off by settings and CVars.
 
 ![DebugLog](Documentation/DebugLog.png)
 
 
+## Settings and CVars
+As of 0.4.20 Inkpot has settings to control its operation.
+These can be found in the Plugins->Inkpot section of Project Settings.
+
+![SettingsAndCVars](Documentation/SettingsAndCVars.png)
+
+### Debug Log 
+Turns debug log on or off.<br> 
+CVar Inkpot.DebugLog<br>
+Default is true.<br>
+
+### Reload If Asset Changed
+For runtime, reloads and restarts the story if the asset has been reimported ( mainly with auto-reimport on ). <br>
+Allows for quick edits of ink whilst running the game. <br>
+CVar Inkpot.ReloadIfAssetChanged<br>
+Default is false.<br>
+
+### Replay If Reloaded
+For runtime, if the story has been reloaded, if this option is set, Inkpot will replay all choices, path & flow changes made to the current point.<br>
+Allows for quick edits of ink scripts whilst running the game, 'live edit'. <br>
+CVar Inkpot.ReplayIfReloaded<br>
+Default is false.<br>
+
 ---
 
 # Testing InkPlusPlus
-We have 170 active tests in Inkpot that test the implementaion of the InkPlusPlus module.<br>
+We have 175 active tests in Inkpot that test the implementaion of the InkPlusPlus module.<br>
 These can all be run through the *Session Frontend* within the Unreal editor.<br>
 To run the tests, first open the *Session Frontend* from Tools, Session Frontend.<br>
 
@@ -238,6 +262,4 @@ Then hit the play button to start the tests.<br>
 
 ![RunTests](Documentation/RunTests.png)
 
-You will note that a couple of the tests fail, which are concerned with JSON serialisation. This is a feature that we did not need in our usage case for Ink. 
-There are also some tests that have not yet been implemented, see .\\Inkpot\\TestInkSource\\Incomplete.
 
