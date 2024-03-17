@@ -40,11 +40,11 @@ The will create the InkpotStoryAsset, that contains the compiled JSON from sourc
 
 ![DragFile](Documentation/DragFile.png)
 
-### Note: .net 3.1 requirement
-If your Ink file fails to import, then you most likely do not have **.net 3.1** installed.<br>
-Inkpot compiles your source when you import using the InkleCate compiler, & InkleCate requires the **.net 3.1** framework.<br>
-To fix install the **.net 3.1** framework <br>
-https://dotnet.microsoft.com/en-us/download/dotnet/3.1/runtime?cid=getdotnetcore
+### Note: .net 5.0 requirement
+If your Ink file fails to import, then you most likely do not have **.net 5.0** installed.<br>
+Inkpot compiles your source when you import using the InkleCate compiler, & InkleCate requires the **.net 5.0** framework.<br>
+To fix install the **.net 5.0** framework <br>
+https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-5.0.17-windows-x64-installer<br>
 
 ## Setting up auto reimport
 Open editor, preferences.<br> 
@@ -251,7 +251,7 @@ Default is false.<br>
 ---
 
 # Testing InkPlusPlus
-We have 175 active tests in Inkpot that test the implementaion of the InkPlusPlus module.<br>
+We have 180 active tests in Inkpot that test the implementaion of the InkPlusPlus module.<br>
 These can all be run through the *Session Frontend* within the Unreal editor.<br>
 To run the tests, first open the *Session Frontend* from Tools, Session Frontend.<br>
 
