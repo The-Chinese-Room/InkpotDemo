@@ -4,11 +4,14 @@
 	"Category": "",
 	"Description": "",
 	"Modules": [
-		{
-			"Name": "InkpotDemo",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
+        {
+          "Name": "InkpotDemo",
+          "Type": "Runtime",
+          "LoadingPhase": "Default",
+          "AdditionalDependencies": [
+            "Inkpot"
+          ]
+        }
 	],
 	"Plugins": [
 		{
@@ -19,7 +22,7 @@
 			]
 		},
 		{
-			"Name": "InkPot",
+			"Name": "Inkpot",
 			"Enabled": true
 		},
 		{
