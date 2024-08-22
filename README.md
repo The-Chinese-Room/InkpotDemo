@@ -131,22 +131,29 @@ To allow conversion between the two there is a blueprint function library to con
 ![MakeInkpotValue](Documentation/MakeInkpotValue.png)
 
 Alternatively, values can be set directly through the InkpotStory object using one of the Set or Get functions.<br>
+These functions also report whether the variable exists in the script via the return parameter *Success*. 
 
-	void SetBool(const FString &Variable, bool bValue);
-	bool GetBool(const FString &Variable);
+	void SetBool(const FString &Variable, bool bValue, bool &Success );
+	void GetBool(const FString &Variable, bool &ReturnValue, bool &Success );
 
-	void SetInt(const FString &Variable, int32 Value);
-	int32 GetInt(const FString &Variable);
+	void SetInt(const FString &Variable, int32 Value, bool &Success );
+	void GetInt(const FString &Variable, int32 &ReturnValue, bool &Success );
 
-	void SetFloat( const FString& Variable, float Value );
-	float GetFloat( const FString& Variable );
+	void SetFloat( const FString& Variable, float Value, bool &Success );
+	void GetFloat( const FString& Variable, float &ReturnValue, bool &Success );
 
-	void SetString( const FString& Variable, const FString& Value );
-	FString GetString( const FString& Variable );
+	void SetString( const FString& Variable, const FString& Value, bool &Success );
+	void GetString( const FString& Variable, FString &ReturnValue, bool &Success );
 
 	void SetEmpty( const FString& Variable );
 
 ![StorySetNGet](Documentation/StorySetNGet.png)
+
+To check if a variable simply exists, call this function.<br>
+
+	bool IsVariableDefined( const FString& Variable );
+
+![VariableExists](Documentation/VariableExistence.png)
 
 
 ### Change notification
