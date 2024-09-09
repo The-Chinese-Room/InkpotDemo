@@ -5,6 +5,7 @@
 #include "Inkpot/InkpotChoice.h"
 #include "Inkpot/InkpotLine.h"
 #include "Inkpot/InkpotValue.h"
+#include "Inkpot/InkpotList.h"
 #include "Utility/InkpotLog.h"
 #include "InkpotStory.generated.h"
 
@@ -91,37 +92,43 @@ public:
 	void ChoosePathString( const FString &Path, const TArray<FInkpotValue> &Values );
 
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
-	void SetValue(const FString &Variable, FInkpotValue Value, bool &Success );
+	void SetValue(const FString &Variable, const FInkpotValue Value, bool &Success );
 
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
-	void GetValue(const FString &Variable, FInkpotValue &ReturnValue, bool &Success );
+	void GetValue(const FString &Variable, FInkpotValue &ReturnValue, bool &bSuccess );
 
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
-	void SetBool(const FString &Variable, bool bValue, bool &Success );
+	void SetBool(const FString &Variable, bool bValue, bool &bSuccess );
 
 	UFUNCTION(BlueprintPure, Category="Inkpot|Story")
-	void GetBool(const FString &Variable, bool &ReturnValue, bool &Success );
+	void GetBool(const FString &Variable, bool &ReturnValue, bool &bSuccess );
 
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
-	void SetInt(const FString &Variable, int32 Value, bool &Success );
+	void SetInt(const FString &Variable, int32 Value, bool &bSuccess );
 
 	UFUNCTION(BlueprintPure, Category="Inkpot|Story")
-	void GetInt(const FString &Variable, int32 &ReturnValue, bool &Success );
+	void GetInt(const FString &Variable, int32 &ReturnValue, bool &bSuccess );
 
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
-	void SetFloat( const FString& Variable, float Value, bool &Success );
+	void SetFloat( const FString& Variable, float Value, bool &bSuccess );
 
 	UFUNCTION(BlueprintPure, Category="Inkpot|Story")
-	void GetFloat( const FString& Variable, float &ReturnValue, bool &Success );
+	void GetFloat( const FString& Variable, float &ReturnValue, bool &bSuccess );
 
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
-	void SetString( const FString& Variable, const FString& Value, bool &Success );
+	void SetString( const FString& Variable, const FString& Value, bool &bSuccess );
 
 	UFUNCTION(BlueprintPure, Category="Inkpot|Story")
-	void GetString( const FString& Variable, FString &ReturnValue, bool &Success );
+	void GetString( const FString& Variable, FString &ReturnValue, bool &bSuccess );
 
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
-	void SetEmpty( const FString& Variable, bool &Success );
+	void SetList( const FString& Variable, const FInkpotList &Value, bool &bSuccess );
+
+	UFUNCTION(BlueprintPure, Category="Inkpot|Story")
+	void GetList( const FString& Variable, FInkpotList &ReturnValue, bool &bSuccess );
+
+	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
+	void SetEmpty( const FString& Variable, bool &bSuccess );
 
 	UFUNCTION(BlueprintPure, Category="Inkpot|Story")
 	bool IsVariableDefined( const FString& Variable );
@@ -151,6 +158,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
 	void UnbindExternalFunction( const FString &FunctionName );
 
+	UFUNCTION(BlueprintCallable, Category = "Inkpot|Story")
+	void EvaluateFunction(const FString& FunctionName, const TArray<FInkpotValue>& InValues);
+	
 	UFUNCTION(BlueprintCallable, Category="Inkpot|Story")
 	FString ToJSON();
 
@@ -175,6 +185,10 @@ public:
 	FOnSwitchFlow& OnSwitchFlow(); 
 	FOnStoryLoadJSON& OnStoryLoadJSON(); 
 
+#if WITH_EDITOR 
+	FOnStoryContinue& OnDebugRefresh();
+#endif 
+
 	virtual void ResetContent( TSharedPtr<FInkpotStoryInternal> InNewStoryContent ); 
 	void ResetState();
 
@@ -197,7 +211,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inkpot|Story")
 	void GatherAllStrings( TMap<FString, FString> &OutStrings );
 
-	virtual void PostBegin();
+	UFUNCTION(BlueprintCallable, Category = "Inkpot|Story")
+	void DumpDebug();
+
+	TSharedPtr<Ink::FListDefinition> GetListOrigin(const FString& InOriginName, const FString& InItemName);
 
 protected:
 	virtual bool CanContinueInternal();
@@ -210,10 +227,10 @@ protected:
 	void OnCompleteEvaluateFunctionInternal(const FString& InFunctionName, const TArray<TSharedPtr<Ink::FValueType>>& InFunctionParms, const FString& OutParmName, TSharedPtr<Ink::FValueType> OutParmType);
 	void OnChoosePathStringInternal(const FString& InPath, const TArray<TSharedPtr<Ink::FValueType>>& InPathType );
 
+	virtual void OnFlowChangeInternal();
 	void BroadcastFlowChange();
 	void UpdateChoices();
 
-	void DumpDebug();
 	void DumpDebug(UInkpotChoice *Choice);
 	
 	TArray<FString> GetNamedContent( TSharedPtr<Ink::FContainer> Container );
@@ -222,6 +239,13 @@ protected:
 	
 	virtual void ChoosePathInternal(const FString &InPath);
 	virtual void ChoosePathStringInternal( const FString& InPath, const TArray<FInkpotValue>& InValues );
+
+	void DebugRefresh();
+	bool CreateInkValues( const TArray<FInkpotValue>& InValues, TArray<TSharedPtr<Ink::FValueType>>& OutValues );
+
+	void OnVariableStateChangeEvent(const FString& VariableName, TSharedPtr<Ink::FObject> NewValueObj);
+
+	void BindOnVariableStateChangeEvent();
 
 protected:
 	TSharedPtr<FInkpotStoryInternal> StoryInternal;
@@ -243,9 +267,17 @@ protected:
 	UPROPERTY(BlueprintAssignable, Category="Inkpot|Story", meta=(DisplayName="OnStoryLoadJSON") )
 	FOnStoryLoadJSON EventOnStoryLoadJSON;
 
+#if WITH_EDITORONLY_DATA 
+	UPROPERTY(BlueprintAssignable, Category = "Inkpot|Story", meta = (DisplayName = "OnDebugRefresh"))
+	FOnStoryContinue EventOnDebugRefresh;
+#endif 
+
 private:
 	UPROPERTY(Transient)
 	TArray<UInkpotChoice*> Choices;
+
+	UPROPERTY(Transient)
+	bool bIsInFunctionEvaluation{ false };
 };
 
 
