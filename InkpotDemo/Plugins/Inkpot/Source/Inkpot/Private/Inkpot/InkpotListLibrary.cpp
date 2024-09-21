@@ -1,35 +1,12 @@
 #include "Inkpot/InkpotListLibrary.h"
 #include "Utility/InkpotLog.h"
 
-void UInkpotListLibrary::PrintToScreen(const FInkpotList &InList, bool bInUseOrigin )
-{
-	if (!GEngine)
-		return;
-
-	TArray<FString> items;
-	InkpotListAsStrings(InList, items, bInUseOrigin );
-	for( FString &item : items )
-	{
-		GEngine->AddOnScreenDebugMessage( -1, 15.0f, FColor::Green, item );
-	}
-}
-
-void UInkpotListLibrary::PrintToLog(const FInkpotList &InList, bool bInUseOrigin )
-{
-	TArray<FString> items;
-	InkpotListAsStrings(InList, items, bInUseOrigin );
-	for( FString &item : items )
-	{
-		INKPOT_LOG("%s", *item );
-	}
-}
-
 void UInkpotListLibrary::ToString(const FInkpotList &InList, FString &ReturnValue, bool bInUseOrigin )
 {
 	InList.ToString( ReturnValue, bInUseOrigin );
 }
 
-FInkpotList UInkpotListLibrary::MakeInkpotList(FString InDefinition, TArray<FString> InValues)
+FInkpotList UInkpotListLibrary::MakeInkpotList(FString InOrigin, TArray<FString> InValues)
 {
 	Ink::FInkList list;
 	int32 count = 0;
@@ -39,7 +16,7 @@ FInkpotList UInkpotListLibrary::MakeInkpotList(FString InDefinition, TArray<FStr
 		bool bIsOriginSpecified = value.Split(TEXT("."), &originName, &itemName);
 		if (!bIsOriginSpecified)
 		{
-			originName = InDefinition;
+			originName = InOrigin;
 			itemName = value;
 		}
 		Ink::FInkListItem item( originName, itemName );
@@ -48,14 +25,14 @@ FInkpotList UInkpotListLibrary::MakeInkpotList(FString InDefinition, TArray<FStr
 	return FInkpotList( MakeShared<Ink::FValueType>( list ) );
 }
 
-FInkpotList UInkpotListLibrary::MakeInkpotListFromString(FString InDefinition, FString InValue)
+FInkpotList UInkpotListLibrary::MakeInkpotListFromString(FString InOrigin, FString InValue)
 {
 	TArray<FString> items;
 	InValue.ParseIntoArray( items, TEXT( "," ), true );
 	for(FString &item : items )
 		item.TrimStartAndEndInline();
 
-	FInkpotList list = MakeInkpotList( InDefinition, items );
+	FInkpotList list = MakeInkpotList(InOrigin, items );
 	return list;
 }
 
