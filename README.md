@@ -333,18 +333,12 @@ You should see this. <br><br>
 
 ### Sections 
 
-* Current 
-** shows the current line of text for the story. 
-* Choices 
-- lists the current set of choices for the story.
-* Tags 
-- lists current and global tags if any.
-* Flow 
-- shows curretn and all other active flow names.
-* Variables 
-- shows a list of all variables defined. These can be modified.
-* Origins 
-- shows all of the list origins that are present in the current story. 
+* Current - shows the current line of text for the story. 
+* Choices - lists the current set of choices for the story.
+* Tags - lists current and global tags if any.
+* Flow - shows curretn and all other active flow names.
+* Variables - shows a list of all variables defined. These can be modified.
+* Origins - shows all of the list origins that are present in the current story. 
 
 
 ## Settings and CVars
