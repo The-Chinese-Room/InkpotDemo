@@ -157,8 +157,8 @@ To check if a variable simply exists, call this function.<br>
 
 ### List types
 Ink's List type is a litte more complex. It requires a reference to an *origin* defined within the story on creation.<br>
-Inks list has a corresponding type FInkpotList that can be used easily within blueprints.
-To create an ink list to within blue prints use one of the following functions from UInkpotListLibrary.<br>
+Ink's List has a corresponding type FInkpotList that can be used easily within blueprints.<br>
+To create an Inkpot list to within blueprints use one of the following functions from UInkpotListLibrary.<br>
 
 	/* converts comma delimited list of item names to a new inkpotlist */
 	FInkpotList MakeInkpotList(UInkpotStory *Story, FString Origin, FString Value);
@@ -183,49 +183,61 @@ Once you have an inkpot list, you can manipulate it as you would in a regular In
 	/* Converts an inkpot list to an array of strings. */
 	void ToStringArray(const FInkpotList &Value, TArray<FString> &ReturnValue, bool bUseOrigin);
 
-	/* Returns a new list that is the combination of both lists passed in. Equivalent to calling (A + B) in ink.. */
+	/* Returns a new list that is the combination of both lists passed in. 
+	Equivalent to calling (A + B) in ink.. */
 	FInkpotList Union(const FInkpotList &A, const FInkpotList &B);
 
-	/* Returns a new list that is the intersection of both lists passed in. Equivalent to calling (A ^ B) in ink.
+	/* Returns a new list that is the intersection of both lists passed in. 
+	Equivalent to calling (A ^ B) in ink.
 	FInkpotList Intersect(const FInkpotList &A, const FInkpotList &B);
 
 	/* Returns true if there is an intersection of both lists passed in, 
 	bool HasIntersection(const FInkpotList &A, const FInkpotList &B);
 
-	/* Returns a new list that is the first list with items in the second list removed. Equivalent to calling (A - B) in ink.*/
+	/* Returns a new list that is the first list with items in the second list removed. 
+	Equivalent to calling (A - B) in ink.*/
 	FInkpotList Without( const FInkpotList &A, const FInkpotList &B );
 
-	/* Returns true if the the first list contains all the items that are in the second list. Equivalent to calling (A ? B) in ink.
+	/* Returns true if the the first list contains all the items that are in the second list. 
+	Equivalent to calling (A ? B) in ink.
 	bool ContainsList( const FInkpotList &Source, const FInkpotList &Querant );
 
 	/* Returns true if the list contains an item matching the given name. 
 	bool ContainsItem(const FInkpotList &Source, const FString &ItemName);
 
-	/* Returns true if all the item values in the first list are greater than all the item values in the second list. Equivalent to calling (A > B) in ink. */
+	/* Returns true if all the item values in the first list are greater than all the item values in the second list. 
+	Equivalent to calling (A > B) in ink. */
 	bool GreaterThan(const FInkpotList &A, const FInkpotList &B);
 
-	/* Returns true if the item values in the first list overlap or are all greater than the item values in the second list. Equivalent to (A >= B) in ink. */
+	/* Returns true if the item values in the first list overlap or are all greater than the item values in the second list. 
+	Equivalent to (A >= B) in ink. */
 	bool GreaterThanOrEquals(const FInkpotList &A, const FInkpotList &B);
 
-	/* Returns true if all the item values first list are less than all the item values in the second list. Equivalent to calling (A < B) in ink. */
+	/* Returns true if all the item values first list are less than all the item values in the second list. 
+	Equivalent to calling (A < B) in ink. */
 	bool LessThan(const FInkpotList &A, const FInkpotList &B);
 
-	/* Returns true if the item values in the first list overlap or are all less than the item values in the second list. Equivalent to (A <= B) in ink. */
+	/* Returns true if the item values in the first list overlap or are all less than the item values in the second list. 
+	Equivalent to (A <= B) in ink. */
 	bool LessThanOrEquals(const FInkpotList &A, const FInkpotList &B);
 
 	/* Returns true if the both lists contain the same items, false otherwise. */
 	bool Equals(const FInkpotList &A, const FInkpotList &B);
 
-	/* Returns a list containing the min item from the passed in list. Equivalent of calling ( LIST_MIN( A ) ) in ink. */
+	/* Returns a list containing the min item from the passed in list. 
+	Equivalent of calling ( LIST_MIN( A ) ) in ink. */
 	FInkpotList MinItem(const FInkpotList &A);
 
-	/* Returns a list containing the max item from the passed in list. Equivalent of calling ( LIST_MAX( A ) ) in ink. */
+	/* Returns a list containing the max item from the passed in list. 
+	Equivalent of calling ( LIST_MAX( A ) ) in ink. */
 	FInkpotList MaxItem(const FInkpotList &A);
 
-	/* Returns a list containing the inverse of the list passed in with respect to the origin. LIST_INVERT( A ) */
+	/* Returns a list containing the inverse of the list passed in with respect to the origin. 
+	Equivalent of calling LIST_INVERT( A ) in ink*/
 	FInkpotList Inverse(const FInkpotList &A);
 
-	/* Returns a list containing the all of the items as defined by the list origin. LIST_ALL( A ).*/
+	/* Returns a list containing the all of the items as defined by the list origin. 
+	Equivalent of calling LIST_ALL( A ).*/
 	FInkpotList All(const FInkpotList &A);
 
 ![ListOperations](Documentation/ListOperations.png)	
@@ -314,17 +326,25 @@ To see this in the content browser, make sure you have *Show Plugin Content* che
 ![ShowPluginContent](Documentation/ShowPluginContent.png)
 
 To run it, right click on *Inkpot Debug* and select run editor utility widget.<br>
-You should see this. 
+![RunEditorUtility](Documentation/RunEditorUtility.png)
+
+You should see this. <br>
 ![BlotterScreen](Documentation/BlotterScreen.png)
 
 ### Sections 
 
-* Current - shows the current line of text for the story. 
-* Choices - lists the current set of choices for the story.
-* Tags - lists current and global tags if any.
-* Flow - shows curretn and all other active flow names.
-* Variables - shows a list of all variables defined. These can be modified.
-* Origins - shows all of the list origins that are present in the current story. 
+* Current 
+- shows the current line of text for the story. 
+* Choices 
+- lists the current set of choices for the story.
+* Tags 
+- lists current and global tags if any.
+* Flow 
+- shows curretn and all other active flow names.
+* Variables 
+- shows a list of all variables defined. These can be modified.
+* Origins 
+- shows all of the list origins that are present in the current story. 
 
 
 ## Settings and CVars
