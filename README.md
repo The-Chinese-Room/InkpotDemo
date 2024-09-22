@@ -333,12 +333,27 @@ You should see this. <br><br>
 
 ### Sections 
 
-* Current - shows the current line of text for the story. 
-* Choices - lists the current set of choices for the story.
-* Tags - lists current and global tags if any.
-* Flow - shows curretn and all other active flow names.
-* Variables - shows a list of all variables defined. These can be modified.
-* Origins - shows all of the list origins that are present in the current story. 
+* **Current**<br>
+Shows the current line of text for the story.<br>
+* **Choices** 
+Lists the current set of choices for the story.<br>
+* **Tags**<br>
+lists current and global tags if any.<br>
+* **Flow**<br>
+Shows current, and all other active flow names.<br>
+* **Variables**<br>
+Shows a list of all variables defined. 
+Bools, ints, floats and strings can be edited directly.
+List types require that the item is defined in the origin, ie within the ink script.
+When added items from other list, prefix the item name with the origin name of the other list.
+* **Origins**<br>
+Shows all of the list origins that are present in the current story. <br>
+A list origin defines the items that can be present in a list variable.<br>
+A list declaration within an ink script declares both the origin and the variable, which can confuse at first.<br>
+
+The blotter will update any time a continue happens or a variable is changed within the Ink runtime.<br>
+You should therefore make sure that your game is in an inactive state before editing the values of varianbles.<br>
+( next updae will likely have some form of pause control )
 
 
 ## Settings and CVars
