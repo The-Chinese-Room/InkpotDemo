@@ -4,31 +4,41 @@ Inkpot is a wrapper for the scripting language **Ink** developed by [Inkle Studi
 See the [Inkpot github](https://github.com/The-Chinese-Room/Inkpot) for more info on the Inkpot plugin itself.<br><br>
 This project works with Unreal Engine version 5.4 or later.<br>
 
+---
+
 ## Folder structure 
 
 	Content
 		InkpotDemo
 			Framework 
 				BP_InkpotDemoGameMode 
-					- game mode Blueprint, creates UI, handles Inkpot OnStoryBegin.
+					- game mode Blueprint, creates UI, 
+					handles Inkpot OnStoryBegin.
 			Maps
 				Demo 		
-					- A demo of Ink scripts interacting with level blueprints and actors. 
+					- A demo of Ink scripts interacting with 
+					level blueprints and actors. 
 				HelloInk	
 					- The most minimal demo using the default ink story.
 				Intro 		
 					- An intro screen for those that don't read docs.
+				Test 		
+					- for testing out all list operations.
 			Props
 				BP_InkyCube	
-					- actor blueprint showing how to get Ink variable change notification. 
+					- actor blueprint showing how to get Ink variable
+					change notification. 
 			Stories			
 				- all the Inkpot story assets.
 			UI
 				WBP_Display
-					- the main display widget, this is where most of the Ink logic lies.
+					- the main display widget, 
+					this is where most of the Ink control logic lies.
 				WBP_Choice
-					- widget for choices that can be made in a story, used by WBP_Display.
+					- widget for choices that can be made in a story, 
+					used by WBP_Display.
 
+---
 
 ## Editing Ink source
 Use Inky, which you can get from here.<br>
@@ -46,6 +56,8 @@ Inkpot compiles your source when you import using the InkleCate compiler, & Inkl
 To fix install the **.net 5.0** framework <br>
 https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-5.0.17-windows-x64-installer<br>
 
+---
+
 ## Setting up auto reimport
 Open editor, preferences.<br> 
 Look Under general, loading and saving, auto reimport.<br>
@@ -57,6 +69,8 @@ Include the source folder, map directory to the corresponding folder in the unre
 
 Once this is setup, the content directory will automatically update when you update, create or delete any ink files in the source folder.
 
+---
+
 ## Starting a story 
 In blueprints, get the Inkpot subsystem and call BeginStory, passing in the InpotStoryAsset. 
 
@@ -64,6 +78,8 @@ In blueprints, get the Inkpot subsystem and call BeginStory, passing in the Inpo
 
 This returns the runtime InkpotStory that executes the script.  
 In this demo, the stories are started by the Level Blueprint.
+
+---
 
 ## Getting story updates
 Once the story has been started using the BeginStory function of Inkpot, it will return an InkpotStory.<br>
@@ -92,9 +108,12 @@ Here, we continue the story, which will result in OnContinue being called thereb
 Flows allow several 'threads' of story to run at the same time. This is used in the demo level to give contextual story snippets fopr wherever the player has walked to.<br>
 This event is called in response to calling the function SwitchFlow on the InkpotStory object.<br>
 
+---
+
 ## Variables
-Ink supports type free variables, Blueprints require typed variables.<br> 
-To allow conversion between the two there is a blueprint function library to convert from one to the other.<br>
+Ink supports type free variables, Blueprints require typed variables.<br><br>  
+### First value types
+For bool, int, float and string types use the blueprint function library, UInkpotValueLibrary, to convert from one to the other.<br>
 
 	/* Create an Ink Value from a boolean */
 	FInkpotValue MakeBoolInkpotValue(bool bValue);
@@ -120,11 +139,8 @@ To allow conversion between the two there is a blueprint function library to con
 	/* Cast Ink value to a string*/
 	FString InkpotValueAsString(FInkpotValue Value);
 
-	/* Create an Ink List from an array of Strings */
-	FInkpotValue MakeInkpotList(const TArray<FString> &Value);
-
-	/* Get an array of strings from an Ink List */
-	TArray<FString> InkpotValueAsList(FInkpotValue Value);    
+	/* Get an Inkpot List from an Ink List */
+	FInkpotList InkpotValueAsList(FInkpotValue Value);    
 
 ![MakeInkpotValue](Documentation/InpotValueAs.png)
 
@@ -155,6 +171,98 @@ To check if a variable simply exists, call this function.<br>
 
 ![VariableExists](Documentation/VariableExistence.png)
 
+### List types
+Ink's List type is a litte more complex. It requires a reference to an *origin* defined within the story on creation.<br>
+Ink's List has a corresponding type FInkpotList that can be used easily within blueprints.<br>
+To create an Inkpot list to within blueprints use one of the following functions from UInkpotListLibrary.<br>
+
+	/* converts comma delimited list of item names to a new inkpotlist */
+	FInkpotList MakeInkpotList(UInkpotStory *Story, FString Origin, FString Value);
+
+	/* converts string array of item names to a new inkpotlist */
+	FInkpotList MakeInkpotListFromStringArray(UInkpotStory *Story, FString Origin, TArray<FString> Values);
+
+![MakeInkpotList](Documentation/MakeInkpotList.png)
+
+To get an Inkpot list from a Inkpot value, simply use the conversion function from UInkpotValueLibrary.<br>
+
+	/* Get an array of strings from an Ink List */
+	FInkpotList InkpotValueAsList(FInkpotValue Value);
+
+![InkpotValueAsList](Documentation/InkpotValueAsList.png)
+
+Once you have an inkpot list, you can manipulate it as you would in a regular Ink script using the following functions.<br> 
+
+	/* prints the contents of the list to a comma delimeted string. */
+	void ToString( const FInkpotList &Value, FString &ReturnValue, bool bUseOrigin );
+
+	/* Converts an inkpot list to an array of strings. */
+	void ToStringArray(const FInkpotList &Value, TArray<FString> &ReturnValue, bool bUseOrigin);
+
+	/* Returns a new list that is the combination of both lists passed in. 
+	Equivalent to calling (A + B) in ink.. */
+	FInkpotList Union(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns a new list that is the intersection of both lists passed in. 
+	Equivalent to calling (A ^ B) in ink.
+	FInkpotList Intersect(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if there is an intersection of both lists passed in, 
+	bool HasIntersection(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns a new list that is the first list with items in the second list removed. 
+	Equivalent to calling (A - B) in ink.*/
+	FInkpotList Without( const FInkpotList &A, const FInkpotList &B );
+
+	/* Returns true if the the first list contains all the items that are in the second list. 
+	Equivalent to calling (A ? B) in ink.
+	bool ContainsList( const FInkpotList &Source, const FInkpotList &Querant );
+
+	/* Returns true if the list contains an item matching the given name. 
+	bool ContainsItem(const FInkpotList &Source, const FString &ItemName);
+
+	/* Returns true if all the item values in the first list 
+	are greater than all the item values in the second list. 
+	Equivalent to calling (A > B) in ink. */
+	bool GreaterThan(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if the item values in the first list overlap 
+	or are all greater than the item values in the second list. 
+	Equivalent to (A >= B) in ink. */
+	bool GreaterThanOrEquals(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if all the item values first list are 
+	less than all the item values in the second list. 
+	Equivalent to calling (A < B) in ink. */
+	bool LessThan(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if the item values in the first list overlap 
+	or are all less than the item values in the second list. 
+	Equivalent to (A <= B) in ink. */
+	bool LessThanOrEquals(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if the both lists contain the same items, false otherwise. */
+	bool Equals(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns a list containing the min item from the passed in list. 
+	Equivalent of calling ( LIST_MIN( A ) ) in ink. */
+	FInkpotList MinItem(const FInkpotList &A);
+
+	/* Returns a list containing the max item from the passed in list. 
+	Equivalent of calling ( LIST_MAX( A ) ) in ink. */
+	FInkpotList MaxItem(const FInkpotList &A);
+
+	/* Returns a list containing the inverse of the list passed in 
+	with respect to the origin. 
+	Equivalent of calling LIST_INVERT( A ) in ink*/
+	FInkpotList Inverse(const FInkpotList &A);
+
+	/* Returns a list containing the all of the items 
+	as defined by the list origin. 
+	Equivalent of calling LIST_ALL( A ).*/
+	FInkpotList All(const FInkpotList &A);
+
+![ListOperations](Documentation/ListOperations.png)	
 
 ### Change notification
 There are a couple of ways of getting change notification from Inkpot, *Story Change Delegate* and *Inkpot Watch Component*.
@@ -224,13 +332,56 @@ To make things easier, here are some helper functions to convert the elements of
 ![BindExternalHelpers](Documentation/BindExternalHelpers.png)
 
 See the demo for a more complete example.<br>
- 
+
+---
+
 ## Debug Log
 Inkpot has it's own debug category, which you can filter the OutputLog by.
 This can be turned off by settings and CVars.
 
 ![DebugLog](Documentation/DebugLog.png)
 
+---
+
+## The Blotter ( Inkpot Debug )
+The Blotter is an Unreal editor utility that can be used to view and set values whilst your story is running in the Unreal Editor.<br>
+
+### Running the Blotter
+The blotter can be found in the content folder of the Inkpot plugin.<br>
+To see this in the content browser, make sure you have *Show Plugin Content* checked in the folder settings.<br><br>
+![ShowPluginContent](Documentation/ShowPluginContent.png)
+
+To run it, right click on *Inkpot Debug* and select *Run Editor Utility Widget*.<br><br>
+![RunEditorUtility](Documentation/RunEditorUtility.png)
+
+You should see this. <br><br>
+![BlotterScreen](Documentation/BlotterScreen.png)
+
+### Blotter Sections 
+
+* **Current**<br>
+Shows the current line of text for the story.<br><br>
+* **Choices**<br> 
+Lists the current set of choices for the story.<br><br>
+* **Tags**<br>
+lists current and global tags if any.<br><br>
+* **Flow**<br>
+Shows current, and all other active flow names.<br><br>
+* **Variables**<br>
+Shows a list of all variables defined.<br> 
+Bools, ints, floats and strings can be edited directly.<br>
+List types require that the item is defined in the origin, ie within the ink script.<br>
+When added items from other list, prefix the item name with the origin name of the other list.<br><br>
+* **Origins**<br>
+Shows all of the list origins that are present in the current story. <br>
+A list origin defines the items that can be present in a list variable.<br>
+A list declaration within an ink script declares both the origin and the variable, which can confuse at first.<br><br>
+
+The blotter will update any time a continue happens or a variable is changed within the Ink runtime.<br>
+You should therefore make sure that your game is in an inactive state before editing the values of varianbles.<br>
+( the next inkpot update will likely feature some form of pause control )
+
+---
 
 ## Settings and CVars
 As of 0.4.20 Inkpot has settings to control its operation.

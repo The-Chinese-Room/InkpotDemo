@@ -3,16 +3,16 @@
 	"EngineAssociation": "5.4",
 	"Category": "",
 	"Description": "",
-	"Modules": [
-        {
-          "Name": "InkpotDemo",
-          "Type": "Runtime",
-          "LoadingPhase": "Default",
-          "AdditionalDependencies": [
-            "Inkpot"
-          ]
-        }
-	],
+  "Modules": [
+    {
+      "Name": "InkpotDemo",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "AdditionalDependencies": [
+        "Inkpot"
+      ]
+    }
+  ],
 	"Plugins": [
 		{
 			"Name": "ModelingToolsEditorMode",
