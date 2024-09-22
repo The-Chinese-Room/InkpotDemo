@@ -2,7 +2,11 @@ EXTERNAL MyExternalBPFunction( ABoolean, TheAnswer, PI, Message, AreasVisited )
 LIST CubeColour = (White), Red, Blue, Green
 LIST visited =  Cube, RedRoundel, BlueBox, Parms, FlowsExplained, ExternalFuncs
 LIST NephewNames = Huey, Duey, Louie
-// nick 
+VAR mybool = true
+VAR myfloat = 3.142
+VAR myinteger = 42
+VAR mystring = "hello from ink"
+VAR mycombinedlist = (Cube, Blue, Louie)
 
 
 ->Main 
@@ -118,8 +122,6 @@ LIST NephewNames = Huey, Duey, Louie
     -> DONE
 
 == ParameterPassingDemo( ABoolean, TheAnswer, PI, Message, Nephews ) 
-    Hello
-    {LIST_ALL( Nephews )}
     {
     - not (visited ? Parms) :
         These parameters have been passed from Blueprint to Ink. 
@@ -141,8 +143,8 @@ LIST NephewNames = Huey, Duey, Louie
 == ExternalFunctionDemo
     ~visited += ExternalFuncs
     This section demos how Ink can call into a blueprint function. 
-    {visited}
-    ~temp ReturnValue = MyExternalBPFunction( true, 42, 3.142, "Hello from Ink", visited )
+    // any of the values here can be changed in the inkpot debug
+    ~temp ReturnValue = MyExternalBPFunction( mybool, myinteger, myfloat, mystring, mycombinedlist )
     and this, '{ReturnValue}', is what it returned. 
     ->DONE
 
