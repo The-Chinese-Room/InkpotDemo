@@ -18,6 +18,8 @@ This project works with Unreal Engine version 5.4 or later.<br>
 					- The most minimal demo using the default ink story.
 				Intro 		
 					- An intro screen for those that don't read docs.
+				Test 		
+					- for testing out all list operations.
 			Props
 				BP_InkyCube	
 					- actor blueprint showing how to get Ink variable change notification. 
@@ -94,7 +96,8 @@ This event is called in response to calling the function SwitchFlow on the Inkpo
 
 ## Variables
 Ink supports type free variables, Blueprints require typed variables.<br> 
-To allow conversion between the two there is a blueprint function library to convert from one to the other.<br>
+### First value types
+For bool, int, float and string types use the blueprint function library, UInkpotValueLibrary, to convert from one to the other.<br>
 
 	/* Create an Ink Value from a boolean */
 	FInkpotValue MakeBoolInkpotValue(bool bValue);
@@ -120,11 +123,8 @@ To allow conversion between the two there is a blueprint function library to con
 	/* Cast Ink value to a string*/
 	FString InkpotValueAsString(FInkpotValue Value);
 
-	/* Create an Ink List from an array of Strings */
-	FInkpotValue MakeInkpotList(const TArray<FString> &Value);
-
-	/* Get an array of strings from an Ink List */
-	TArray<FString> InkpotValueAsList(FInkpotValue Value);    
+	/* Get an Inkpot List from an Ink List */
+	FInkpotList InkpotValueAsList(FInkpotValue Value);    
 
 ![MakeInkpotValue](Documentation/InpotValueAs.png)
 
@@ -155,6 +155,80 @@ To check if a variable simply exists, call this function.<br>
 
 ![VariableExists](Documentation/VariableExistence.png)
 
+### List types
+Ink's List type is a litte more complex. It requires a reference to an *origin* defined within the story on creation.<br>
+Inks list has a corresponding type FInkpotList that can be used easily within blueprints.
+To create an ink list to within blue prints use one of the following functions from UInkpotListLibrary.<br>
+
+	/* converts comma delimited list of item names to a new inkpotlist */
+	FInkpotList MakeInkpotList(UInkpotStory *Story, FString Origin, FString Value);
+
+	/* converts string array of item names to a new inkpotlist */
+	FInkpotList MakeInkpotListFromStringArray(UInkpotStory *Story, FString Origin,  TArray<FString> Values);
+
+![MakeInkpotList](Documentation/MakeInkpotList.png)
+
+To get an Inkpot list from a Inkpot value, simply use the conversion function from UInkpotValueLibrary.<br>
+
+	/* Get an array of strings from an Ink List */
+	FInkpotList InkpotValueAsList(FInkpotValue Value);
+
+![InkpotValueAsList](Documentation/InkpotValueAsList.png)
+
+Once you have an inkpot list, you can manipulate it as you would in a regular Ink script using the following functions.<br> 
+
+	/* prints the contents of the list to a comma delimeted string. */
+	void ToString( const FInkpotList &Value, FString &ReturnValue, bool bUseOrigin );
+
+	/* Converts an inkpot list to an array of strings. */
+	void ToStringArray(const FInkpotList &Value, TArray<FString> &ReturnValue, bool bUseOrigin);
+
+	/* Returns a new list that is the combination of both lists passed in. Equivalent to calling (A + B) in ink.. */
+	FInkpotList Union(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns a new list that is the intersection of both lists passed in. Equivalent to calling (A ^ B) in ink.
+	FInkpotList Intersect(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if there is an intersection of both lists passed in, 
+	bool HasIntersection(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns a new list that is the first list with items in the second list removed. Equivalent to calling (A - B) in ink.*/
+	FInkpotList Without( const FInkpotList &A, const FInkpotList &B );
+
+	/* Returns true if the the first list contains all the items that are in the second list. Equivalent to calling (A ? B) in ink.
+	bool ContainsList( const FInkpotList &Source, const FInkpotList &Querant );
+
+	/* Returns true if the list contains an item matching the given name. 
+	bool ContainsItem(const FInkpotList &Source, const FString &ItemName);
+
+	/* Returns true if all the item values in the first list are greater than all the item values in the second list. Equivalent to calling (A > B) in ink. */
+	bool GreaterThan(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if the item values in the first list overlap or are all greater than the item values in the second list. Equivalent to (A >= B) in ink. */
+	bool GreaterThanOrEquals(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if all the item values first list are less than all the item values in the second list. Equivalent to calling (A < B) in ink. */
+	bool LessThan(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if the item values in the first list overlap or are all less than the item values in the second list. Equivalent to (A <= B) in ink. */
+	bool LessThanOrEquals(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns true if the both lists contain the same items, false otherwise. */
+	bool Equals(const FInkpotList &A, const FInkpotList &B);
+
+	/* Returns a list containing the min item from the passed in list. Equivalent of calling ( LIST_MIN( A ) ) in ink. */
+	FInkpotList MinItem(const FInkpotList &A);
+
+	/* Returns a list containing the max item from the passed in list. Equivalent of calling ( LIST_MAX( A ) ) in ink. */
+	FInkpotList MaxItem(const FInkpotList &A);
+
+	/* Returns a list containing the inverse of the list passed in with respect to the origin. LIST_INVERT( A ) */
+	FInkpotList Inverse(const FInkpotList &A);
+
+	/* Returns a list containing the all of the items as defined by the list origin. LIST_ALL( A ).*/
+	FInkpotList All(const FInkpotList &A);
+
+![ListOperations](Documentation/ListOperations.png)	
 
 ### Change notification
 There are a couple of ways of getting change notification from Inkpot, *Story Change Delegate* and *Inkpot Watch Component*.
@@ -230,6 +304,27 @@ Inkpot has it's own debug category, which you can filter the OutputLog by.
 This can be turned off by settings and CVars.
 
 ![DebugLog](Documentation/DebugLog.png)
+
+## The Blotter ( Inkpot Debug )
+The Blotter is an Unreal editor utility that can be used to view and set values whilst your story is running in the Unreal Editor.<br>
+
+### Running the Blotter
+The blotter can be found in the content folder of the Inkpot plugin.<br>
+To see this in the content browser, make sure you have *Show Plugin Content* checked in the folder settings.<br>
+![ShowPluginContent](Documentation/ShowPluginContent.png)
+
+To run it, right click on *Inkpot Debug* and select run editor utility widget.<br>
+You should see this. 
+![BlotterScreen](Documentation/BlotterScreen.png)
+
+### Sections 
+
+* Current - shows the current line of text for the story. 
+* Choices - lists the current set of choices for the story.
+* Tags - lists current and global tags if any.
+* Flow - shows curretn and all other active flow names.
+* Variables - shows a list of all variables defined. These can be modified.
+* Origins - shows all of the list origins that are present in the current story. 
 
 
 ## Settings and CVars
