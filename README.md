@@ -44,6 +44,8 @@ This project works with Unreal Engine version 5.4 or later.<br>
 Use Inky, which you can get from here.<br>
 https://github.com/inkle/inky
 
+---
+
 ## Importing ink files 
 To import, drag the ink source file into a content browser window within the Unreal Editor.<br>
 The will create the InkpotStoryAsset, that contains the compiled JSON from source.<br>
