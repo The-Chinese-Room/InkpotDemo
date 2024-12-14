@@ -95,11 +95,14 @@ TSharedPtr<Ink::FListDefinition> UInkpotStory::GetListOrigin(const FString& InOr
 		return nullptr;
 	}
 
-	bool gotItem = origin->ContainsItemWithName(InItemName);
-	if (!gotItem)
+	if(InItemName.Len())
 	{
-		INKPOT_ERROR("Failed to find entry '%s' in List definition '%s'", *InItemName, *InOriginName);
-		return nullptr;
+		bool gotItem = origin->ContainsItemWithName(InItemName);
+		if (!gotItem)
+		{
+			INKPOT_ERROR("Failed to find entry '%s' in List definition '%s'", *InItemName, *InOriginName);
+			return nullptr;
+		}
 	}
 	return origin;
 }
@@ -896,11 +899,11 @@ FOnStoryContinue& UInkpotStory::OnDebugRefresh()
 }
 #endif
 
-void UInkpotStory::NotifyLineCompletetd(const FString& Context)
+void UInkpotStory::NotifyLineCompletetd(const FString& InContext, bool bInSuccess )
 {
 	if (!EventOnLineComplete.IsBound())
 		return;
-	EventOnLineComplete.Broadcast(this, Context);
+	EventOnLineComplete.Broadcast(this, InContext, bInSuccess);
 }
 
 
