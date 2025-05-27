@@ -110,6 +110,9 @@ Here, we continue the story, which will result in OnContinue being called thereb
 Flows allow several 'threads' of story to run at the same time. This is used in the demo level to give contextual story snippets fopr wherever the player has walked to.<br>
 This event is called in response to calling the function SwitchFlow on the InkpotStory object.<br>
 
+### Additional Functions
+You'll find a more complete list of InkPot functions accessible from blueprints in [Inkpot/Source/Inkpot/Public/Inkpot/InkpotStory.h](InkpotDemo/Plugins/Inkpot/Source/Inkpot/Public/Inkpot/InkpotStory.h).
+
 ---
 
 ## Variables
