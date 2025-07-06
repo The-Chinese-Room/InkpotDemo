@@ -1,25 +1,19 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "5.4",
+	"EngineAssociation": "5.6",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "InkpotDemo",
 			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Inkpot"
-			]
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
 		{
 			"Name": "ModelingToolsEditorMode",
-			"Enabled": true,
-			"TargetAllowList": [
-				"Editor"
-			]
+			"Enabled": true
 		},
 		{
 			"Name": "Inkpot",
@@ -33,5 +27,9 @@
 			"Name": "CustomizableSequencerTracks",
 			"Enabled": true
 		}
-	]
+	],
+	"TargetPlatforms": [],
+	"AdditionalRootDirectories": [],
+	"AdditionalPluginDirectories": [],
+	"EpicSampleNameHash": ""
 }
