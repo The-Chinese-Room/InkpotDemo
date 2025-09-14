@@ -351,7 +351,7 @@ This can be turned off by settings and CVars.
 ## Inkpot Debug
 There are two debug tools in developement, *the blotter* and *the outliner*.<br>
 The Blotter allows you to view and set values whilst your story is running in the Unreal Editor.<br>
-The Outliner currently only allows you to see the overal structure of your story.<br>
+The Outliner currently only allows you to see the overal structure of your story.<br><br>
 ![StartBlotterMenu](Documentation/StartBlotter.png)
 
 ### The Blotter
@@ -368,13 +368,13 @@ lists current and global tags if any.<br><br>
 * **Flow**<br>
 Shows current, and all other active flow names.<br><br>
 * **Variables**<br>
-Shows a list of all variables defined.<br><br>  
-Bools, ints, floats and strings can be edited directly.<br><br> 
+Shows a list of all variables defined.<br>
+Bools, ints, floats and strings can be edited directly.<br>
 List types require that the item is defined in an origin, ie a LIST declaration within the ink script.<br>
 When adding items from other lists, prefix the item name with the origin name of the other list.<br>
-Lists can be expanded inline and set using the check the values you want to set in the list.<br><br> 
-Variables can be filtered based on their name, by using the filter field at the top.<br><br> 
-Variables can be pinned so that they appear at the top of the list for when you have a lot variables.<br><br> 
+Lists can be expanded inline and set using the check the values you want to set in the list.<br>
+Variables can be filtered based on their name, by using the filter field at the top.<br>
+Variables can be pinned so that they appear at the top of the list for when you have a lot variables.<br>
 * **Origins**<br>
 Shows all of the list origins that are present in the current story. <br>
 A list origin defines the items that can be present in a list variable.<br>
@@ -384,17 +384,19 @@ The blotter will update any time a continue happens or a variable is changed wit
 You should therefore make sure that your game is in an inactive state before editing the values of variables.<br>
 
 ### The Outliner
-![OutlinerScreen](Documentation/Outliner.png)
+![OutlinerScreen](Documentation/Outliner.png)<br>
 Currenly only shows the structure of the current story. 
 
 ---
 
 ## Settings
-These can be found in the Plugins->Inkpot section of Project Settings.<br>
+These can be found in the Plugins->Inkpot section of Project Settings.<br><br>
 ![ProjectSettings](Documentation/ProjectSettings.png)
+
 ### Story factory class
 Advanced use, most of the time just set this to InkpotStoryFactory.<br>
 
+---
 
 ## Preferences and CVars
 These can be found in the Plugins->Inkpot section of Editor Preferences.<br>
@@ -440,20 +442,22 @@ Additionally, all functions where a string would be used to look up a variable o
 
 ### Creating a Gameplay Tag Table
 Right click on any previously imported Ink story asset, and select *Asset Actions* -> *Create Inkpot Tags from Story Assets*<br>
-![CreateTags](Documentation/CreateTags.png)
+![CreateTags](Documentation/CreateTags.png)<br>
+
 A new asset will be created containing all the knot & stitch paths, variables, and list origin items defined in the story.<br>
-![TagCreated](Documentation/TagCreated.png)
+![TagCreated](Documentation/TagCreated.png)<br>
+
 Double click to see the detail of the tag table.<br>
 ![TagDetail](Documentation/TagDetail.png)
 
 ### Hooking up the GameplayTag Table
 Now that you have your gameplay tag table, it needs to be added to the project as an additional source of gameplay tags.<br>
-Open up the project settings, *Edit* -> *Project Settings*.<br>
+Open up the project settings, *Edit* -> *Project Settings*.<br><br>
 ![TagProjectSettings](Documentation/TagProjectSettings.png)
 In the *Project* -> *Gameplay Tags* section, add the new GameplayTag table to the *Gameplay Tag Table List*.
 
 ### Ink Lists and Gameplay Tags
-Ink lists can now be set and queried by gameplay tags.<br>
+Ink lists can now be set and queried by gameplay tags.<br><br>
 ![TagsAndLists](Documentation/TagsAndLists.png)
 Lists can be created from a single tag or a list of tags.
 
@@ -475,12 +479,11 @@ Lists can be created from a single tag or a list of tags.
 ### Gameplay Tags story API, GT Functions
 The InkpotStory class has been updated with support for all of the functions using strings to lookup paths and variables.<br>
 These are the GT functions, all are functionalty identical to the previous string variables.<br>
-Type *GT* to find these quickly in the context menu for Inkpot menus in the Blueprint editor.<br>
+Type *GT* to find these quickly in the context menu for Inkpot menus in the Blueprint editor.<br><br>
 ![TagsGTFunctions](Documentation/TagsGTFunctions.png)
-The new Blueprint nodes will allow you to select the path and variables you need from a drop down list. 
-![TagSelecting](Documentation/TagSelecting.png)
+The new Blueprint nodes will allow you to select the path and variables you need from a drop down list. <br>
+![TagSelecting](Documentation/TagSelecting.png)<br>
 See InkpotStory.h for all the new GT function definitions.<br>
-	
 
 
 --- 
