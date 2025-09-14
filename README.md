@@ -2,7 +2,7 @@
 Small demo project in Unreal showing how to use the Inkpot plugin for Unreal Engine created by [The Chinese Room](https://www.thechineseroom.co.uk/).<br><br>
 Inkpot is a wrapper for the scripting language **Ink** developed by [Inkle Studios](https://www.inklestudios.com/ink/)<br>
 See the [Inkpot github](https://github.com/The-Chinese-Room/Inkpot) for more info on the Inkpot plugin itself.<br><br>
-This project works with Unreal Engine version 5.4 or later.<br>
+This project works with Unreal Engine version 5.6 or later.<br>
 
 ---
 
@@ -348,18 +348,13 @@ This can be turned off by settings and CVars.
 
 ---
 
-## The Blotter ( Inkpot Debug )
-The Blotter is an Unreal editor utility that can be used to view and set values whilst your story is running in the Unreal Editor.<br>
+## Inkpot Debug
+There are two debug tools in developement, *the blotter* and *the outliner*.<br>
+The Blotter allows you to view and set values whilst your story is running in the Unreal Editor.<br>
+The Outliner currently only allows you to see the overal structure of your story.<br><br>
+![StartBlotterMenu](Documentation/StartBlotter.png)
 
-### Running the Blotter
-The blotter can be found in the content folder of the Inkpot plugin.<br>
-To see this in the content browser, make sure you have *Show Plugin Content* checked in the folder settings.<br><br>
-![ShowPluginContent](Documentation/ShowPluginContent.png)
-
-To run it, right click on *Inkpot Debug* and select *Run Editor Utility Widget*.<br><br>
-![RunEditorUtility](Documentation/RunEditorUtility.png)
-
-You should see this. <br><br>
+### The Blotter
 ![BlotterScreen](Documentation/BlotterScreen.png)
 
 ### Blotter Sections 
@@ -373,10 +368,13 @@ lists current and global tags if any.<br><br>
 * **Flow**<br>
 Shows current, and all other active flow names.<br><br>
 * **Variables**<br>
-Shows a list of all variables defined.<br> 
+Shows a list of all variables defined.<br>
 Bools, ints, floats and strings can be edited directly.<br>
 List types require that the item is defined in an origin, ie a LIST declaration within the ink script.<br>
-When adding items from other lists, prefix the item name with the origin name of the other list.<br><br>
+When adding items from other lists, prefix the item name with the origin name of the other list.<br>
+Lists can be expanded inline and set using the check the values you want to set in the list.<br>
+Variables can be filtered based on their name, by using the filter field at the top.<br>
+Variables can be pinned so that they appear at the top of the list for when you have a lot variables.<br>
 * **Origins**<br>
 Shows all of the list origins that are present in the current story. <br>
 A list origin defines the items that can be present in a list variable.<br>
@@ -384,15 +382,29 @@ A LIST declaration within an ink script declares both the origin and the variabl
 
 The blotter will update any time a continue happens or a variable is changed within the Ink runtime.<br>
 You should therefore make sure that your game is in an inactive state before editing the values of variables.<br>
-( the next inkpot update will likely feature some form of pause control )
+
+### The Outliner
+![OutlinerScreen](Documentation/Outliner.png)<br>
+Currenly only shows the structure of the current story. 
 
 ---
 
-## Settings and CVars
-As of 0.4.20 Inkpot has settings to control its operation.
-These can be found in the Plugins->Inkpot section of Project Settings.
+## Settings
+These can be found in the Plugins->Inkpot section of Project Settings.<br><br>
+![ProjectSettings](Documentation/ProjectSettings.png)
 
-![SettingsAndCVars](Documentation/SettingsAndCVars.png)
+### Story factory class
+Advanced use, most of the time just set this to InkpotStoryFactory.<br>
+
+---
+
+## Preferences and CVars
+These can be found in the Plugins->Inkpot section of Editor Preferences.<br>
+![EditorPreferences](Documentation/EditorPreferences.png)
+
+### Autogenerate Gameplay Tags 
+Generates a gameplay tag table for the ink source whenever it is imported.<br>
+For more info on gameplay tags, see below. <br>
 
 ### Debug Log 
 Turns debug log on or off.<br> 
@@ -412,6 +424,69 @@ CVar Inkpot.ReplayIfReloaded<br>
 Default is false.<br>
 
 ---
+
+## Gameplay Tag support
+New in version 1.20.21 Inkpot has GameplayTag support.<br>
+
+### What are Gameplay Tags
+Gameplay Tags are a user defined hierarchical labelling system used extensively within Unreal for identifying and referencing objects across systems.<br>
+They are defined once and can never be changed, reducing silly that can be introduced by mistyping the wrong string say into a blueprint node.<br>
+Gameplay Tags can be combined in GameplayTagContainers in the same way Ink List entries can be combined.<br>
+More info from Epic here.<br>
+[Using gameplay tags](https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine)<br>
+
+### How are they used in Inkpot
+A set of Gameplay Tags is created containing tags for all paths, variables, and list origin items within the Ink source file.<br> 
+Ink Lists can then be freely converted to GameplayTagContainers and back.<br>
+Additionally, all functions where a string would be used to look up a variable or path now have a GameplayTag variant, GT for short.<br>
+
+### Creating a Gameplay Tag Table
+Right click on any previously imported Ink story asset, and select *Asset Actions* -> *Create Inkpot Tags from Story Assets*<br>
+![CreateTags](Documentation/CreateTags.png)<br>
+
+A new asset will be created containing all the knot & stitch paths, variables, and list origin items defined in the story.<br>
+![TagCreated](Documentation/TagCreated.png)<br>
+
+Double click to see the detail of the tag table.<br>
+![TagDetail](Documentation/TagDetail.png)
+
+### Hooking up the GameplayTag Table
+Now that you have your gameplay tag table, it needs to be added to the project as an additional source of gameplay tags.<br>
+Open up the project settings, *Edit* -> *Project Settings*.<br><br>
+![TagProjectSettings](Documentation/TagProjectSettings.png)
+In the *Project* -> *Gameplay Tags* section, add the new GameplayTag table to the *Gameplay Tag Table List*.
+
+### Ink Lists and Gameplay Tags
+Ink lists can now be set and queried by gameplay tags.<br><br>
+![TagsAndLists](Documentation/TagsAndLists.png)
+Lists can be created from a single tag or a list of tags.
+
+	// Creates an Inkpot List from a gameplay tag.
+	FInkpotList MakeInkpotListFromGameplayTag(UInkpotStory *Story, FGameplayTag Tag);
+
+	// Creates a gameplay tag from an inkpot list.
+	void ToGameplayTag(const FInkpotList &Value, FGameplayTag &ReturnValue);
+
+	// Creates an Inkpot List from a gameplay tag collection.
+	FInkpotList MakeInkpotListFromGameplayTags(UInkpotStory *Story, FGameplayTagContainer Tags);
+
+	// Creates a gameplay tag from an inkpot list.
+	void ToGameplayTags(const FInkpotList &Value, FGameplayTagContainer &ReturnValue);
+
+	// Returns true if the list contains an item matching the given Gameplay Tag.
+	bool ContainsTag(const FInkpotList &Source, FGameplayTag Tag);
+	
+### Gameplay Tags story API, GT Functions
+The InkpotStory class has been updated with support for all of the functions using strings to lookup paths and variables.<br>
+These are the GT functions, all are functionalty identical to the previous string variables.<br>
+Type *GT* to find these quickly in the context menu for Inkpot menus in the Blueprint editor.<br><br>
+![TagsGTFunctions](Documentation/TagsGTFunctions.png)
+The new Blueprint nodes will allow you to select the path and variables you need from a drop down list. <br>
+![TagSelecting](Documentation/TagSelecting.png)<br>
+See InkpotStory.h for all the new GT function definitions.<br>
+
+
+--- 
 
 # Testing InkPlusPlus
 We have 180 active tests in Inkpot that test the implementaion of the InkPlusPlus module.<br>
