@@ -11,7 +11,7 @@ public class InkpotDemoEditorTarget : TargetRules
 		Type = TargetType.Editor;
         DefaultBuildSettings = BuildSettingsVersion.Latest;
         IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
-        bOverrideBuildEnvironment = true;
+        NativePointerMemberBehaviorOverride = PointerMemberBehavior.Disallow;
         ExtraModuleNames.Add("InkpotDemo");
 		ExtraModuleNames.Add("InkpotDemoEditor");
 	}
