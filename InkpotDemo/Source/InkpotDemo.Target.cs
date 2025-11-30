@@ -6,7 +6,7 @@ public class InkpotDemoTarget : TargetRules
 	public InkpotDemoTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-        DefaultBuildSettings = BuildSettingsVersion.V5;
+        DefaultBuildSettings = BuildSettingsVersion.Latest;
         IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
         ExtraModuleNames.Add("InkpotDemo");
 	}
