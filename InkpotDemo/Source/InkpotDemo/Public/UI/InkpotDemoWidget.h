@@ -20,5 +20,5 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere, Transient )
-	UInkpotStory *InkStory{nullptr};
+	TObjectPtr<UInkpotStory> InkStory{nullptr};
 };
