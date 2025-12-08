@@ -15,6 +15,8 @@ This project works with Unreal Engine version 5.6 or later.<br>
 					- game mode Blueprint, creates UI, 
 					handles Inkpot OnStoryBegin.
 			Maps
+				AdventureDemo
+					- An example of how to use Ink and Inkpot for dialogue, quests, and a player journal
 				Demo 		
 					- A demo of Ink scripts interacting with 
 					level blueprints and actors. 
@@ -34,6 +36,8 @@ This project works with Unreal Engine version 5.6 or later.<br>
 				WBP_Display
 					- the main display widget, 
 					this is where most of the Ink control logic lies.
+				WBP_Display_Adventure
+					- the display widget for the Adventure Demo, based off the main Demo but with additional functionality.
 				WBP_Choice
 					- widget for choices that can be made in a story, 
 					used by WBP_Display.
