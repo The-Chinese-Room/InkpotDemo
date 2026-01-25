@@ -492,30 +492,33 @@ See InkpotStory.h for all the new GT function definitions.<br>
 ---
 
 # Custom import pipeline
-Vesion 1.30 of Inkpot introduces a fully customisable import pipeline.<br>
-This then allows any processing you may for example do for things like localisation and other processing you may do to create meta data from your ink source.<br>
+Vesion 1.30 of Inkpot introduces a fully customisable import pipeline.<br><br>
+This allows any processing you may have for things like localisation and other processing you may do to create meta data from your ink source.<br>
 
 ## Inkpot Import Pipeline Editor Utility Object
 To allow python scripts, command line utils and scripts to all be run we've based this on an Editor Utility Object.<br>
-*Inkpot Import Pipeline* Has one event that needs to be defined, *Event Import*. <br>
+This allows you to create Blueprint logic for the import process.<br>
+The *Inkpot Import Pipeline* obkect has one event that needs to be defined, *Event Import*. <br><br>
 ![ImportPipelineMinimal](Documentation/ImportPipelineMinimal.png)<br>
 
 ### Event Import
+This will be called whenever an Ink source file is imported or reimported to Unreal.<br>
 This event passess in two parameters:<br>
-* *Source File* - fully qualified to the source ink file. <br>
-* *New Story Asset* - this is the newly created story asset into which the Ink JSON will need to be set.<br>
+* *Source File* - the fully qualified path to the source ink file. <br>
+* *New Story Asset* - the newly created story asset into which the Ink JSON will need to be set.<br>
 
-To successfully complete the import a call to *Finalise* must be made, failing to do this in you import pipeline will cause the import to fail.<br>
+To successfully complete the import a call to *Finalise* must be made.,br.
+Failing to do this in you import pipeline will cause the import to fail.<br><br>
 ![ImportPipelineFinalise](Documentation/ImportPipelineFinalise.png)<br>
 
-### Custom user asset data
-Inkpot now allows a single user data asset to be attached to the *InkpotStoryAsset*.<br>
+### Custom Asset User Data
+Inkpot allows asset user data to be attached to the *InkpotStoryAsset*.<br>
 During import this data can be created and set on the *New Story Asset*.<br>
 
-Check out the example import pipeline object *MetaDataExampleImport* for an example.<br>
+Check out the example import pipeline object *MetaDataExampleImport* for an example.<br><br>
 ![ImportPipelineUserData](Documentation/ImportPipelineUserData.png)<br>
 
-Here the user data is created from a simple example C++ class:<br>
+Here the user data is created from a simple example C++ class included in the plugin:<br>
 
 	UCLASS()
 	class INKPOT_API UInkpotStoryMetaDataSimple : public UAssetUserData
@@ -537,18 +540,18 @@ Here the user data is created from a simple example C++ class:<br>
 		FString EvenMoreExtraData;
 	};
 
-**Note:**
-1. The class must derive from UAssetUserData.<br>
-2. The static Make and Break functions to make creating this class easier from the context of Blueprint.<br>
+**Notes:**
+1. Your class must derive from UAssetUserData.<br>
+2. The static Make and Break functions are include to make creating this class easier from the context of Blueprint & more like a struct<br>
 
 ## Selecting the import pipeline
-Select the import pipeline you want to use for you project in the *Plugins->Inkpot* section of *Project Settings*.<br>
+Select the import pipeline you want to use for you project in the *Plugins->Inkpot* section of *Project Settings*.<br><br>
 ![ImportPipelineSetup](Documentation/ImportPipelineSetup.png)<br>
 
 
 ## Inkpot Import Pipeline Location
 All of the example import pipelines can be found in the Inkpot Content folder. <br>
-To find this in the content browser you need to enable *Plugin Content* from the folder view.<br>
+To find this in the content browser you need to enable *Plugin Content* from the folder view.<br><br>
 ![ImportPipelineSetup](Documentation/ImportPipelineLocation.png)<br>
 
 
