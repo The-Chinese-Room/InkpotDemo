@@ -498,7 +498,7 @@ This then allows any processing you may for example do for things like localisat
 ## Inkpot Import Pipeline Editor Utility Object
 To allow python scripts, command line utils and scripts to all be run we've based this on an Editor Utility Object.<br>
 *Inkpot Import Pipeline* Has one event that needs to be defined, *Event Import*. <br>
-![InkpotImportMinimal](Documentation/InkpotImportMinimal.png)<br>
+![ImportPipelineMinimal](Documentation/ImportPipelineMinimal.png)<br>
 
 ### Event Import
 This event passess in two parameters:<br>
@@ -506,14 +506,14 @@ This event passess in two parameters:<br>
 * *New Story Asset* - this is the newly created story asset into which the Ink JSON will need to be set.<br>
 
 To successfully complete the import a call to *Finalise* must be made, failing to do this in you import pipeline will cause the import to fail.<br>
-![InkpotImportFinalise](Documentation/InkpotImportFinalise.png)<br>
+![ImportPipelineFinalise](Documentation/ImportPipelineFinalise.png)<br>
 
 ### Custom user asset data
 Inkpot now allows a single user data asset to be attached to the *InkpotStoryAsset*.<br>
 During import this data can be created and set on the *New Story Asset*.<br>
 
 Check out the example import pipeline object *MetaDataExampleImport* for an example.<br>
-![InkpotImportUserData](Documentation/InkpotImportUserData.png)<br>
+![ImportPipelineUserData](Documentation/ImportPipelineUserData.png)<br>
 
 Here the user data is created from a simple example C++ class:<br>
 
