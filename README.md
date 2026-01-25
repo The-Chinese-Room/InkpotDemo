@@ -489,6 +489,68 @@ The new Blueprint nodes will allow you to select the path and variables you need
 ![TagSelecting](Documentation/TagSelecting.png)<br>
 See InkpotStory.h for all the new GT function definitions.<br>
 
+---
+
+# Custom import pipeline
+Vesion 1.30 of Inkpot introduces a fully customisable import pipeline.<br>
+This then allows any processing you may for example do for things like localisation and other processing you may do to create meta data from your ink source.<br>
+
+## Inkpot Import Pipeline Editor Utility Object
+To allow python scripts, command line utils and scripts to all be run we've based this on an Editor Utility Object.<br>
+*Inkpot Import Pipeline* Has one event that needs to be defined, *Event Import*. <br>
+![InkpotImportMinimal](Documentation/InkpotImportMinimal.png)<br>
+
+### Event Import
+This event passess in two parameters:<br>
+* *Source File* - fully qualified to the source ink file. <br>
+* *New Story Asset* - this is the newly created story asset into which the Ink JSON will need to be set.<br>
+
+To successfully complete the import a call to *Finalise* must be made, failing to do this in you import pipeline will cause the import to fail.<br>
+![InkpotImportFinalise](Documentation/InkpotImportFinalise.png)<br>
+
+### Custom user asset data
+Inkpot now allows a single user data asset to be attached to the *InkpotStoryAsset*.<br>
+During import this data can be created and set on the *New Story Asset*.<br>
+
+Check out the example import pipeline object *MetaDataExampleImport* for an example.<br>
+![InkpotImportUserData](Documentation/InkpotImportUserData.png)<br>
+
+Here the user data is created from a simple example C++ class:<br>
+
+	UCLASS()
+	class INKPOT_API UInkpotStoryMetaDataSimple : public UAssetUserData
+	{
+		GENERATED_BODY()
+
+	public:
+
+		UFUNCTION(BlueprintPure)
+		static UInkpotStoryMetaDataSimple* MakeInkpotStoryMetaDataSimple(FString SomeExtraData, FString EvenMoreExtraData);
+
+		UFUNCTION(BlueprintPure)
+		static void BreakInkpotStoryMetaDataSimple(UAssetUserData* target, FString &SomeExtraData, FString &EvenMoreExtraData);
+
+		UPROPERTY(VisibleAnywhere)
+		FString SomeExtraData;
+
+		UPROPERTY(VisibleAnywhere)
+		FString EvenMoreExtraData;
+	};
+
+**Note:**
+1. The class must derive from UAssetUserData.<br>
+2. The static Make and Break functions to make creating this class easier from the context of Blueprint.<br>
+
+## Selecting the import pipeline
+Select the import pipeline you want to use for you project in the *Plugins->Inkpot* section of *Project Settings*.<br>
+![ImportPipelineSetup](Documentation/ImportPipelineSetup.png)<br>
+
+
+## Inkpot Import Pipeline Location
+All of the example import pipelines can be found in the Inkpot Content folder. <br>
+To find this in the content browser you need to enable *Plugin Content* from the folder view.<br>
+![ImportPipelineSetup](Documentation/ImportPipelineLocation.png)<br>
+
 
 --- 
 
