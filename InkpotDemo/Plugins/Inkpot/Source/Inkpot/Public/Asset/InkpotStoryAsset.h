@@ -4,29 +4,56 @@
 #include "Engine/DataAsset.h"
 #include "InkpotStoryAsset.generated.h"
 
+class UInkpotStoryMetaData;
+
 UCLASS(BlueprintType)
-class INKPOT_API UInkpotStoryAsset : public UDataAsset
+class INKPOT_API UInkpotStoryAsset : public UDataAsset, public IInterface_AssetUserData
 {
 	GENERATED_BODY()
 
 public:
 	UInkpotStoryAsset();
 
-	void SetSource( const FString &InSource );
+	/* SetSource
+	* Set the source contents of the Asset, this is not used by the runtime and can be left blank.
+	*/
+	UFUNCTION( BlueprintCallable )
+	void SetSource( const FString &Source );
+
+	/* GetSource
+	* returns the source contents of the Asset.
+	*/
+	UFUNCTION(BlueprintPure)
 	const FString &GetSource() const;
 
-	void SetCompiledJSON( const FString &InJSON );
+	/* SetCompiledJSON
+	* Sets the JSON content of the Asset.
+	* This is required for the story to be loadable by the Ink runtime.
+	*/
+	UFUNCTION( BlueprintCallable )
+	void SetCompiledJSON( const FString &JSON );
+
+	/* GetCompiledJSON
+	* Gets the JSON content of the Asset.
+	*/
+	UFUNCTION(BlueprintPure)
 	const FString& GetCompiledJSON() const;
 
 #if WITH_EDITOR
 	virtual void PostInitProperties() override;
-	virtual void GetAssetRegistryTags( FAssetRegistryTagsContext InContext ) const override;
+	virtual void GetAssetRegistryTags( FAssetRegistryTagsContext Context ) const override;
 #endif
 #if WITH_EDITORONLY_DATA
 	virtual void Serialize(FStructuredArchiveRecord Record) override;
 	class UAssetImportData* GetAssetImportData();
-	void UpdateAssetInfo( const FString &InFilename );
+	void UpdateAssetInfo( const FString &Filename );
 #endif
+
+	UFUNCTION(BlueprintCallable, Category = "Inkpot|StoryAsset")
+	virtual void AddAssetUserData(UAssetUserData* UserData) override;
+
+	UFUNCTION(BlueprintPure, Category = "Inkpot|StoryAsset", meta = (DeterminesOutputType = "Class"))
+	virtual UAssetUserData* GetAssetUserDataOfClass(TSubclassOf<UAssetUserData> Class) override;
 
 private:
 	UPROPERTY( VisibleAnywhere, Category="Inkpot|StoryAsset" )
@@ -34,6 +61,9 @@ private:
 
 	UPROPERTY( VisibleAnywhere, Category="Inkpot|StoryAsset" )
 	FString JSON;
+
+	UPROPERTY(VisibleAnywhere, Category = "Inkpot|StoryAsset")
+	TObjectPtr <UAssetUserData> UserData;
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(VisibleAnywhere, Instanced, Category = ImportSettings)

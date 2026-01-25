@@ -2,7 +2,7 @@
 Small demo project in Unreal showing how to use the Inkpot plugin for Unreal Engine created by [The Chinese Room](https://www.thechineseroom.co.uk/).<br><br>
 Inkpot is a wrapper for the scripting language **Ink** developed by [Inkle Studios](https://www.inklestudios.com/ink/)<br>
 See the [Inkpot github](https://github.com/The-Chinese-Room/Inkpot) for more info on the Inkpot plugin itself.<br><br>
-This project works with Unreal Engine version 5.6 or later.<br>
+This project works with Unreal Engine version 5.7 or later.<br>
 
 ---
 
@@ -15,6 +15,8 @@ This project works with Unreal Engine version 5.6 or later.<br>
 					- game mode Blueprint, creates UI, 
 					handles Inkpot OnStoryBegin.
 			Maps
+				AdventureDemo
+					- An example of how to use Ink and Inkpot for dialogue, quests, and a player journal
 				Demo 		
 					- A demo of Ink scripts interacting with 
 					level blueprints and actors. 
@@ -34,6 +36,8 @@ This project works with Unreal Engine version 5.6 or later.<br>
 				WBP_Display
 					- the main display widget, 
 					this is where most of the Ink control logic lies.
+				WBP_Display_Adventure
+					- the display widget for the Adventure Demo, based off the main Demo but with additional functionality.
 				WBP_Choice
 					- widget for choices that can be made in a story, 
 					used by WBP_Display.
@@ -484,6 +488,71 @@ Type *GT* to find these quickly in the context menu for Inkpot menus in the Blue
 The new Blueprint nodes will allow you to select the path and variables you need from a drop down list. <br>
 ![TagSelecting](Documentation/TagSelecting.png)<br>
 See InkpotStory.h for all the new GT function definitions.<br>
+
+---
+
+# Custom import pipeline
+Vesion 1.30 of Inkpot introduces a fully customisable import pipeline.<br><br>
+This allows any processing you may have for things like localisation and other processing you may do to create meta data from your ink source.<br>
+
+## Inkpot Import Pipeline Editor Utility Object
+To allow python scripts, command line utils and scripts to all be run we've based this on an Editor Utility Object.<br>
+This allows you to create Blueprint logic for the import process.<br>
+The *Inkpot Import Pipeline* obkect has one event that needs to be defined, *Event Import*. <br><br>
+![ImportPipelineMinimal](Documentation/ImportPipelineMinimal.png)<br>
+
+### Event Import
+This will be called whenever an Ink source file is imported or reimported to Unreal.<br>
+This event passess in two parameters:<br>
+* *Source File* - the fully qualified path to the source ink file. <br>
+* *New Story Asset* - the newly created story asset into which the Ink JSON will need to be set.<br>
+
+To successfully complete the import a call to *Finalise* must be made.<br>
+Failing to do this in you import pipeline will cause the import to fail.<br><br>
+![ImportPipelineFinalise](Documentation/ImportPipelineFinalise.png)<br>
+
+### Custom Asset User Data
+Inkpot allows asset user data to be attached to the *InkpotStoryAsset*.<br>
+During import this data can be created and set on the *New Story Asset*.<br>
+
+Check out the example import pipeline object *MetaDataExampleImport* for an example.<br><br>
+![ImportPipelineUserData](Documentation/ImportPipelineUserData.png)<br>
+
+Here the user data is created from a simple example C++ class included in the plugin:<br>
+
+	UCLASS()
+	class INKPOT_API UInkpotStoryMetaDataSimple : public UAssetUserData
+	{
+		GENERATED_BODY()
+
+	public:
+
+		UFUNCTION(BlueprintPure)
+		static UInkpotStoryMetaDataSimple* MakeInkpotStoryMetaDataSimple(FString SomeExtraData, FString EvenMoreExtraData);
+
+		UFUNCTION(BlueprintPure)
+		static void BreakInkpotStoryMetaDataSimple(UAssetUserData* target, FString &SomeExtraData, FString &EvenMoreExtraData);
+
+		UPROPERTY(VisibleAnywhere)
+		FString SomeExtraData;
+
+		UPROPERTY(VisibleAnywhere)
+		FString EvenMoreExtraData;
+	};
+
+**Notes:**
+1. Your class must derive from UAssetUserData.<br>
+2. The static Make and Break functions are include to make creating this class easier from the context of Blueprint & more like a struct<br>
+
+## Selecting the import pipeline
+Select the import pipeline you want to use for you project in the *Plugins->Inkpot* section of *Project Settings*.<br><br>
+![ImportPipelineSetup](Documentation/ImportPipelineSetup.png)<br>
+
+
+## Inkpot Import Pipeline Location
+All of the example import pipelines can be found in the Inkpot Content folder. <br>
+To find this in the content browser you need to enable *Plugin Content* from the folder view.<br><br>
+![ImportPipelineSetup](Documentation/ImportPipelineLocation.png)<br>
 
 
 --- 
